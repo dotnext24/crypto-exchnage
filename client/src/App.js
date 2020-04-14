@@ -9,9 +9,9 @@ import {
 
 import './App.css';
 import About from './components/token-exchange/About';
-import Users from './components/token-exchange/exchange';
+import Users from './components/token-exchange/Exchange';
 import Header from './components/shared/Header';
-import Exchange from './components/token-exchange/exchange';
+import Exchange from './components/token-exchange/Exchange';
 
 class App extends Component {
   state = {
