@@ -89,11 +89,24 @@ export default class Exchange extends Component {
                                             <div class="full-name-label">{this.state.sendCurrency && this.state.sendCurrency.NAME?this.state.sendCurrency.NAME:"US Dollar"}</div>{this.state.sendCurrency && this.state.sendCurrency.SYMBOL?this.state.sendCurrency.SYMBOL:"usd"}
                                         </button>
                                     </div>
-                                   {this.state.showSendCurrency && <CurrencyDropdown onSelect={this.onSendCurrencySelect}></CurrencyDropdown>}
+                                   {this.state.showSendCurrency && <CurrencyDropdown onSelect={this.onSendCurrencySelect} onClose={this.handleShowSendCurrency}></CurrencyDropdown>}
                                    {!this.state.showSendCurrency && <div class="styled__DropListWrapper-tlgv5r-0 bZzVdI"></div>}
 
                                     <span className="bottom-label">Estimated Value: <text>$270.10</text></span>
                                 </div>
+
+                                <div class="styled__AlertsBlock-th509d-4 cGhoPf">
+                                    <div class="switch-block">
+                                        <div class="left-side">                                        
+                                           <div class="rate-info"></div>
+                                        </div>
+                                        <button type="button" tabindex="0" class="exchange-switch-button">
+                                            <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.888916 3.22266L3.11112 1.00045L5.33333 3.22266" stroke="#80A3B6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M3.11108 10.7773L3.11108 0.999619" stroke="#80A3B6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M13.1112 8.77779L10.889 11L8.66675 8.77779" stroke="#80A3B6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M10.8889 1.22228L10.8889 11" stroke="#80A3B6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                                        </button>
+                                    </div>
+                                </div>
+
+
 
 
 
@@ -108,7 +121,7 @@ export default class Exchange extends Component {
                                             <div class="full-name-label">{this.state.receiveCurrency && this.state.receiveCurrency.NAME?this.state.receiveCurrency.NAME:"Ethereum"}</div>{this.state.receiveCurrency && this.state.receiveCurrency.SYMBOL?this.state.receiveCurrency.SYMBOL:"eth"}
                                         </button>
                                     </div>
-                                    {this.state.showReceiveCurrency && <CurrencyDropdown onSelect={this.onReceiveCurrencySelect}></CurrencyDropdown>}
+                                    {this.state.showReceiveCurrency && <CurrencyDropdown onSelect={this.onReceiveCurrencySelect} onClose={this.handleShowReceiveCurrency}></CurrencyDropdown>}
                                    {!this.state.showReceiveCurrency && <div class="styled__DropListWrapper-tlgv5r-0 bZzVdI"></div>}
 
                                     {/* <div class="styled__DropListWrapper-tlgv5r-0 bZzVdI">
@@ -144,6 +157,29 @@ export default class Exchange extends Component {
 
 
                     </section>
+                    
+                    
+                    <section class="styled__Block-sc-1dgkj28-2 eoWQrT sc-uJMKN hfOMXj transaction-detail">
+                        <div class="styled__AccordionContent-sc-1dgkj28-4 eaQuem">
+                            <div class="accordion-content">
+                            <div style={{display:'none'}} class="styled__TransactionDetalsTable-sc-1dgkj28-7 WqVkd">
+                            <div class="row"><div class="label">Exchange fee 0.25%</div><div class="value">0.0106698 ETH</div></div>
+                            </div>
+                            <div>
+                            <div class="styled__TransactionDetalsLabel-sc-1dgkj28-6 bxVGjg">
+                                <svg width="18" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.7143 6.00028H10.4286L8.71428 11.1431L5.28571 0.857422L3.57142 6.00028H1.28571" stroke="#557F96" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                                <span>Transaction details</span>
+                            </div>
+                            </div>
+                            </div>
+                            <div class="accordion-toggle-button">                            
+                                {/* <span class="arrow-down-icon styled__SvgIcon-sc-1dgkj28-5 idEyaG" width="1rem" height="0.6rem"></span> */}
+                                <span class="arrow-down-icon styled__SvgIcon-sc-1dgkj28-5 idEyaG" width="1rem" height="0.6rem"></span>
+                            </div>
+                            </div>
+                    </section>
+                    
+                    
                     <section class="styled__Block-sc-1dgkj28-2 ioLDbv sc-uJMKN hfOMXj">
                         <button type="button" class="bg-primary cl-button  sc-ifAKCX dVuRDF">Connect to a wallet</button>
                     </section>

@@ -3,17 +3,118 @@
   height: 0px;
   margin-top: 5px;
 }
+
+.idEyaG.arrow-down-icon {
+    background-image: url(https://changelly.com/_next/static/images/arrow-down-309c4ee22cd5479e63282f90548061a7.svg);
+}
+
+.WqVkd .row {
+    padding:0px 20px;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+}
+
+.WqVkd .label {
+    color: rgb(85, 127, 150);
+}
+
+.WqVkd .value {
+    color: rgb(57, 66, 71);
+    margin-left: 0.7rem;
+    font-weight: 600;
+}
+
+
 .exchnage-container{padding-bottom: 50px}
 .hfOMXj {
     box-shadow: rgba(128, 163, 182, 0.098) 0px 0px 20px;
     margin: 1.6rem -2rem;
-    padding: 2.2rem 2rem;
+    padding: 0px 20px;
     background: white;
     border-radius: 8px;
     transition: box-shadow 0.25s ease 0s;
     margin: auto;
-    width: 600px;
+    width: 500px;
 }
+
+.idEyaG {
+    display: inline-block;
+    width: 1rem;
+    height: 0.6rem;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.eaQuem {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+}
+.eaQuem .accordion-toggle-button {
+    cursor: pointer;
+    transform: rotate(0deg);
+    padding: 1.5rem 0px 1.5rem 1.5rem;
+}
+
+.idEyaG.arrow-down-icon {
+    background-image: url(https://changelly.com/_next/static/images/arrow-down-309c4ee22cd5479e63282f90548061a7.svg);
+}
+
+.cGhoPf {
+    position: relative;
+}
+
+.fzipjT .switch-block {
+    position: relative;
+    min-height: 32px;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+}
+
+.fzipjT .switch-block .left-side {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+}
+
+.fzipjT .rate-info {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: rgb(85, 127, 150);
+    font-family: Montserrat, sans-serif;
+}
+
+.fzipjT .exchange-switch-button {
+    width: 32px;
+    height: 32px;
+    line-height: 45px;
+    cursor: pointer;
+    padding: 0px;
+    background: rgba(128, 163, 182, 0.1);
+    border-width: 0px;
+    border-style: initial;
+    border-color: initial;
+    border-image: initial;
+    border-radius: 100%;
+    outline: none;
+}
+
+.fzipjT .switch-block .exchange-switch-button svg {
+    position: relative;
+    top: -6px;
+    left: 1px;
+}
+
+
 
 .kMBCJS {
     font-size: 18px;
