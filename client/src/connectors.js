@@ -13,9 +13,11 @@ import { TorusConnector } from '@web3-react/torus-connector'
 
 const POLLING_INTERVAL = 12000
 const RPC_URLS = {
-  1: process.env.RPC_URL_1,
-  4: process.env.RPC_URL_4 
+  1: process.env.REACT_APP_RPC_URL_1,
+  4: process.env.REACT_APP_RPC_URL_4 
 }
+
+console.log('rpc',process.env)
 
 export const injected = new InjectedConnector({ supportedChainIds: [1, 3, 4, 5, 42] })
 
@@ -51,12 +53,12 @@ export const frame = new FrameConnector({ supportedChainIds: [1] })
 
 export const authereum = new AuthereumConnector({ chainId: 42 })
 
-export const fortmatic = new FortmaticConnector({ apiKey: process.env.FORTMATIC_API_KEY, chainId: 4 })
+export const fortmatic = new FortmaticConnector({ apiKey: process.env.REACT_APP_FORTMATIC_API_KEY, chainId: 4 })
 
-export const portis = new PortisConnector({ dAppId: process.env.PORTIS_DAPP_ID, networks: [1, 100] })
+export const portis = new PortisConnector({ dAppId: process.env.REACT_APP_PORTIS_DAPP_ID, networks: [1, 100] })
 
 export const squarelink = new SquarelinkConnector({
-  clientId: process.env.SQUARELINK_CLIENT_ID,
+  clientId: process.env.REACT_APP_SQUARELINK_CLIENT_ID,
   networks: [1, 100]
 })
 

@@ -3,6 +3,8 @@ import { Modal, Button } from 'react-bootstrap'
 import './style.css'
 import './media-style.css'
 import CurrencyDropdown from './CurrencyDropdown';
+import Account from '../shared/AccountNumber';
+import Connections from '../shared/Connections';
 
 export default class Exchange extends Component {
     constructor(props) {
@@ -32,7 +34,9 @@ export default class Exchange extends Component {
             <Modal.Header closeButton>
                 <Modal.Title>Modal heading</Modal.Title>
             </Modal.Header>
-            <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+            <Modal.Body>Woohoo, you're reading this text in a modal!
+                <Connections></Connections>
+            </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={handleShowConnectWalletPopup}>
                     Close
@@ -71,11 +75,13 @@ export default class Exchange extends Component {
     }
 
     render() {
+        
         return (
             <React.Fragment>
                 <div class="styled__PageWrapper-sc-1dgkj28-0 kGkjno">
                     <section class="connect-wallet" >
-                        <a onClick={this.handleShowConnectWalletPopup}>Connect Wallet</a>
+                        <Account action={this.handleShowConnectWalletPopup}></Account>
+                       
                     </section>
                     <section class="styled__Block-sc-1dgkj28-2 ioLDbv sc-uJMKN hfOMXj exchnage-container" >
 
