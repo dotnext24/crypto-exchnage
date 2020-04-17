@@ -1,0 +1,37 @@
+.wallet-balance{
+    font-size: 14px;
+    font-weight: 500;
+    color: rgb(85, 127, 150);
+    float: right;
+}
+
+.wallets .card{
+    border-radius: 1rem;
+    margin-bottom: 10px;;
+}
+
+.wallets img{
+    float: right;
+}
+
+.modal-title {
+    color: rgb(85, 127, 150);
+}
+
+.wallets .card a{
+    font-size: 14px;
+    font-weight: 600;
+    color: rgb(85, 127, 150);
+}
+
+.modal-backdrop.show {
+    opacity: 0.1;
+}
+
+@media (min-width: 576px)
+{
+
+.modal-wallet {
+    max-width: 600px;
+}
+}

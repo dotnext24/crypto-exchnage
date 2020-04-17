@@ -3,6 +3,9 @@ import { AbstractConnector } from '@web3-react/abstract-connector'
 import { Web3ReactProvider, useWeb3React, UnsupportedChainIdError } from '@web3-react/core'
 import { Web3Provider } from '@ethersproject/providers'
 import { formatEther } from '@ethersproject/units'
+import {Card} from 'react-bootstrap'
+import {TokenLogo} from './../../utils/TokenIcon'
+import './style.css'
 
 import { useEagerConnect, useInactiveListener } from '../../hooks'
 import {
@@ -43,69 +46,72 @@ export default function Connections() {
   
   
   
+  // const connectorsByName = {
+  //   Metamask: injected,
+  //   Network: network,
+  //   WalletConnect: walletconnect,
+  //   WalletLink: walletlink,
+  //   Ledger: ledger,
+  //   Trezor: trezor,
+  //   Frame: frame,
+  //   Authereum: authereum,
+  //   Fortmatic: fortmatic,
+  //   Portis: portis,
+  //   Squarelink: squarelink,
+  //   Torus: torus
+  // }
+
   const connectorsByName = {
-    Injected: injected,
-    Network: network,
+    Metamask: injected,    
     WalletConnect: walletconnect,
-    WalletLink: walletlink,
-    Ledger: ledger,
-    Trezor: trezor,
-    Frame: frame,
-    Authereum: authereum,
     Fortmatic: fortmatic,
     Portis: portis,
-    Squarelink: squarelink,
     Torus: torus
   }
   
    
         return (
             <React.Fragment>
+              <div class="wallets">
+              <div className="row">
+    
+   
+  
                  {Object.keys(connectorsByName).map(name => {
           const currentConnector = connectorsByName[name]
           const activating = currentConnector === activatingConnector
           const connected = currentConnector === connector
           const disabled = !triedEager || !!activatingConnector || connected || !!error
-
+console.log(name)
           return (
-            <button
-              style={{
-                height: '3rem',
-                borderRadius: '1rem',
-                borderColor: activating ? 'orange' : connected ? 'green' : 'unset',
-                cursor: disabled ? 'unset' : 'pointer',
-                position: 'relative'
-              }}
-              disabled={disabled}
-              key={name}
-              onClick={() => {
+<div className="col-5">
+      
+    
+<Card body>
+
+  <a onClick={() => {
                 setActivatingConnector(currentConnector)
                 activate(connectorsByName[name])
-              }}
-            >
-              <div
-                style={{
-                  position: 'absolute',
-                  top: '0',
-                  left: '0',
-                  height: '100%',
-                  display: 'flex',
-                  alignItems: 'center',
-                  color: 'black',
-                  margin: '0 0 0 1rem'
-                }}
-              >
-                {activating && <p style={{ height: '25%', marginLeft: '-1rem' }} ></p>}
+              }}>
+                 {activating && <span>....</span>}
                 {connected && (
-                  <span role="img" aria-label="check">
+                  <span  style={{marginRight:'5px'}} role="img" aria-label="check">
                     ✅
                   </span>
                 )}
-              </div>
-              {name}
-            </button>
+                {name}
+                {name=='WalletConnect' && <img height="24" width="24" src={`./assets/${name}.svg`}/>}
+                {name!='WalletConnect' && <img height="24" width="24" src={`./assets/${name}.png`}/>}
+              </a>
+         
+</Card>
+</div>
+           
+          
           )
         })}
+        </div>
+            </div>
             </React.Fragment>
         )
     
