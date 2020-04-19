@@ -1,13 +1,12 @@
 version: "3"
-services:
- 
+services: 
     web:
-        container_name: awesome_server
+        container_name: exchange_server
         build:
             context: .
             dockerfile: Dockerfile
-        image: dotnext/awesome_server
+        image: dotnext/exchange_server
         ports:
-            - "5001:5001"
+            - "5000:5000"
         volumes:
             - ./:/usr/src/app

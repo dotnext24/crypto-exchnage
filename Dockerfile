@@ -22,6 +22,6 @@ RUN npm install
 
 # add app
 COPY . ./
-EXPOSE 5001
+EXPOSE 5000
 # start app
 CMD ["npm","run", "dev:server"]
