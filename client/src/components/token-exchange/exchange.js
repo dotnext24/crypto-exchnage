@@ -93,7 +93,7 @@ export default class exchange extends Component {
                                             <div className="full-name-label">{this.state.sendCurrency && this.state.sendCurrency.NAME?this.state.sendCurrency.NAME:"US Dollar"}</div>{this.state.sendCurrency && this.state.sendCurrency.SYMBOL?this.state.sendCurrency.SYMBOL:"usd"}
                                         </button>
                                     </div>
-                                   {this.state.showSendCurrency && <CurrencyDropdown onSelect={this.onSendCurrencySelect} onClose={this.handleShowSendCurrency}></CurrencyDropdown>}
+                                   {this.state.showSendCurrency && <currencydropdown onSelect={this.onSendCurrencySelect} onClose={this.handleShowSendCurrency}></currencydropdown>}
                                    {!this.state.showSendCurrency && <div className="styled__DropListWrapper-tlgv5r-0 bZzVdI"></div>}
 
                                     <span className="bottom-label">Estimated Value: <text>$270.10</text></span>
@@ -125,7 +125,7 @@ export default class exchange extends Component {
                                             <div className="full-name-label">{this.state.receiveCurrency && this.state.receiveCurrency.NAME?this.state.receiveCurrency.NAME:"Ethereum"}</div>{this.state.receiveCurrency && this.state.receiveCurrency.SYMBOL?this.state.receiveCurrency.SYMBOL:"eth"}
                                         </button>
                                     </div>
-                                    {this.state.showReceiveCurrency && <CurrencyDropdown onSelect={this.onReceiveCurrencySelect} onClose={this.handleShowReceiveCurrency}></CurrencyDropdown>}
+                                    {this.state.showReceiveCurrency && <currencydropdown onSelect={this.onReceiveCurrencySelect} onClose={this.handleShowReceiveCurrency}></currencydropdown>}
                                    {!this.state.showReceiveCurrency && <div className="styled__DropListWrapper-tlgv5r-0 bZzVdI"></div>}
 
                                     {/* <div className="styled__DropListWrapper-tlgv5r-0 bZzVdI">
