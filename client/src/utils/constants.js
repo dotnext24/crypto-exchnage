@@ -4,6 +4,4 @@ export const Wallets={
     WalletConnect:'WalletConnect',
     Portis:'Portis',
     Torus:'Torus'
-
-
 }
