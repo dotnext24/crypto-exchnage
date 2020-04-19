@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { Modal, Button } from 'react-bootstrap'
 import './style.css'
 import './media-style.css'
-import CurrencyDropdown from './CurrencyDropdown';
+import currencydropdown from './currencycropdown';
 import Account from '../shared/AccountNumber';
 import Connections from '../shared/Connections';
 import Balance from '../shared/Balance';
 
-export default class Exchange extends Component {
+export default class exchange extends Component {
     constructor(props) {
         super(props)
         this.state = {

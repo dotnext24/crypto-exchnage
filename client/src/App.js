@@ -9,9 +9,8 @@ import {
 
 import './App.css';
 import About from './components/token-exchange/About';
-import Users from './components/token-exchange/Exchange';
 import Header from './components/shared/Header';
-import Exchange from './components/token-exchange/Exchange';
+import exchange from './components/token-exchange/exchange';
 
 class App extends Component {
   state = {
@@ -62,7 +61,7 @@ class App extends Component {
           </Route>
          
           <Route path="/">
-            <Exchange></Exchange>
+            <exchange></exchange>
           </Route>
         </Switch>
       
