@@ -10,7 +10,7 @@ import {
 import './App.css';
 import About from './components/token-exchange/About';
 import Header from './components/shared/Header';
-import exchange from './components/token-exchange/exchange';
+import Exchange from './components/token-exchange/Exchange';
 
 class App extends Component {
   state = {
@@ -61,7 +61,7 @@ class App extends Component {
           </Route>
          
           <Route path="/">
-            <exchange></exchange>
+            <Exchange></Exchange>
           </Route>
         </Switch>
       

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import {INITIAL_TOKENS_CONTEXT,TokenLogo} from '../../utils/TokenIcon'
 
-export default class currencydropdown extends Component {   
+export default class CurrencyDropdown extends Component {   
 
     constructor(props){
       super(props)
