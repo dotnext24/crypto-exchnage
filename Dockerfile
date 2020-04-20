@@ -22,6 +22,10 @@ RUN npm install
 
 # add app
 COPY . ./
+
+RUN cd client && npm install && npm run build
+RUN cd ..
+ENV PORT 5000
 EXPOSE 5000
 # start app
-CMD ["npm","run", "dev:server"]
+CMD ["npm","run", "start"]

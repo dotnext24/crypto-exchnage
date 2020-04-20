@@ -82,9 +82,9 @@ export default function Connections() {
           const activating = currentConnector === activatingConnector
           const connected = currentConnector === connector
           const disabled = !triedEager || !!activatingConnector || connected || !!error
-console.log(name)
+
           return (
-<div className="col-5">
+<div className="col-lg-5 col-md-5 col-sm-12">
       
     
 <Card body>

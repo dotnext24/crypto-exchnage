@@ -17,6 +17,7 @@ export default class Exchange extends Component {
             showSendCurrency:false,
             showReceiveCurrency:false,
         }
+        this.handleSwitchCurrency=this.handleSwitchCurrency.bind(this);
         this.onSendCurrencySelect=this.onSendCurrencySelect.bind(this);
         this.onReceiveCurrencySelect=this.onReceiveCurrencySelect.bind(this);
         this.handleShowSendCurrency=this.handleShowSendCurrency.bind(this);
@@ -70,6 +71,15 @@ export default class Exchange extends Component {
         })
     }
 
+    handleSwitchCurrency=()=>{
+        const sendCurrency=this.state.sendCurrency;
+        const receiveCurrency=this.state.receiveCurrency;
+        this.setState({
+            sendCurrency:receiveCurrency,
+            receiveCurrency:sendCurrency
+        })
+    }
+
     render() {
         
         return (
@@ -104,7 +114,7 @@ export default class Exchange extends Component {
                                         <div className="left-side">                                        
                                            <div className="rate-info"></div>
                                         </div>
-                                        <button type="button" tabindex="0" className="exchange-switch-button">
+                                        <button onClick={this.handleSwitchCurrency} type="button" tabindex="0" className="exchange-switch-button">
                                             <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.888916 3.22266L3.11112 1.00045L5.33333 3.22266" stroke="#80A3B6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M3.11108 10.7773L3.11108 0.999619" stroke="#80A3B6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M13.1112 8.77779L10.889 11L8.66675 8.77779" stroke="#80A3B6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M10.8889 1.22228L10.8889 11" stroke="#80A3B6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
                                         </button>
                                     </div>
