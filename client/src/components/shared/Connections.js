@@ -23,7 +23,11 @@ import {
     torus
   } from './../../connectors'
 
-
+ const isMetamaskInstalled=()=>{ if (!(window.web3 || window.ethereum)) {
+    return false;} else {
+      return true 
+    }
+  }
 export default function Connections() {
 
     const context = useWeb3React()
@@ -42,6 +46,10 @@ export default function Connections() {
 
   // handle logic to connect in reaction to certain events on the injected ethereum provider, if it exists
   useInactiveListener(!triedEager || !!activatingConnector)
+
+ 
+
+  const isMetamask = window.ethereum && window.ethereum.isMetaMask
 
   
   
@@ -84,14 +92,19 @@ export default function Connections() {
           const disabled = !triedEager || !!activatingConnector || connected || !!error
 
           return (
-<div className="col-lg-5 col-md-5 col-sm-12">
+<div key={name} className="col-lg-5 col-md-5 col-sm-12">
       
-    
+  
 <Card body>
 
-  <a onClick={() => {
+       <a onClick={() => {
+                if(name=='Metamask' && !isMetamaskInstalled()){
+                  window.open("https://metamask.io/");
+                }
+                else{
                 setActivatingConnector(currentConnector)
                 activate(connectorsByName[name])
+                }
               }}>
                  {activating && <span>....</span>}
                 {connected && (
@@ -99,7 +112,7 @@ export default function Connections() {
                     ✅
                   </span>
                 )}
-                {name}
+                 {(name=='Metamask' && !isMetamaskInstalled())?"Install "+name:name}               
                 {name=='WalletConnect' && <img height="24" width="24" src={`./assets/${name}.svg`}/>}
                 {name!='WalletConnect' && <img height="24" width="24" src={`./assets/${name}.png`}/>}
               </a>

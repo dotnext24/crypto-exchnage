@@ -16,6 +16,7 @@ export default class CurrencyDropdown extends Component {
     }
 
     componentDidMount(){
+        
         this.setState({
             currencies:INITIAL_TOKENS_CONTEXT[1],
             filteredCurrencies:INITIAL_TOKENS_CONTEXT[1]
@@ -25,7 +26,7 @@ export default class CurrencyDropdown extends Component {
     onSelect=(key)=>{
        console.log('selected key',key);
        ;
-       this.props.onSelect(this.state.currencies[key]);
+       this.props.onSelect({...this.state.currencies[key],key});
     }
 
     handleChange=(event)=>{

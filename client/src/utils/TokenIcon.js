@@ -1,5 +1,11 @@
 export const INITIAL_TOKENS_CONTEXT = {
     1: {
+      'ETH': {
+        NAME: 'Ethereum',
+        SYMBOL: 'ETH',
+        DECIMALS: 18,
+        EXCHANGE_ADDRESS: null
+      },
       '0xB6eD7644C69416d67B522e20bC294A9a9B405B31': {
         NAME: '0xBitcoin Token',
         SYMBOL: '0xBTC',
@@ -632,6 +638,12 @@ export const INITIAL_TOKENS_CONTEXT = {
       }
     },
     4: {
+      'ETH': {
+        NAME: 'Ethereum',
+        SYMBOL: 'ETH',
+        DECIMALS: 18,
+        EXCHANGE_ADDRESS: null
+      },
       '0x5592EC0cfb4dbc12D3aB100b257153436a1f0FEa': {
         NAME: 'Dai',
         SYMBOL: 'DAI',
@@ -640,6 +652,21 @@ export const INITIAL_TOKENS_CONTEXT = {
       }
     }
   }
+
+  export const getDefaultTokens=(pair)=>{
+      let tokensPain= pair.split("/");
+      let allTokens=INITIAL_TOKENS_CONTEXT[1];
+      const sendTokens=Object.keys(allTokens).filter(x=>allTokens[x].SYMBOL==tokensPain[0]);
+      const recieveTokens=Object.keys(allTokens).filter(x=>allTokens[x].SYMBOL==tokensPain[1]);
+      if(sendTokens.length>0 && recieveTokens.length>0){
+      const sendCurrency=allTokens[sendTokens[0]];
+      const receiveCurrency=allTokens[recieveTokens[0]]
+      console.log('sendCurrency receiveCurrency',sendCurrency,receiveCurrency)
+      return [{...sendCurrency,key:sendTokens[0]},{...receiveCurrency,key:recieveTokens[0]}]
+      }
+      else
+      return [];
+    }
 
   const TOKEN_ICON_API = address =>
   `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${address}/logo.png`;

@@ -21,12 +21,12 @@ class App extends Component {
 
   componentDidMount() {
     this.callApi()
-      .then(res => this.setState({ response: res.express }))
+      .then(res => console.log('respons token',res))
       .catch(err => console.log(err));
   }
 
   callApi = async () => {
-    const response = await fetch('/api/hello');
+    const response = await fetch('/api/token_price/ancsddd/usd');
     const body = await response.json();
 
     if (response.status !== 200) throw Error(body.message);

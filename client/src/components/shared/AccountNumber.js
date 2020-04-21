@@ -15,10 +15,10 @@ export default function AccountNumber(props) {
 
   const triedEager = useEagerConnect()
 
-  useInactiveListener(!triedEager || !!activatingConnector)
+  useInactiveListener()
  
   if(active && account && account.length>0)
-        return (<a  onClick={() => {deactivate()}}>{account.substr(0,10)}</a>
+        return (<a  onClick={() => {deactivate();}}>{account.substr(0,10)}</a>
         )
   else return <a onClick={props.action}>Connect Wallet</a>;
     
