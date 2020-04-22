@@ -703,3 +703,9 @@
     border-color: transparent transparent rgb(255, 176, 0);
 }
 
+.transaction-detail label{
+    font-size: 14px;
+    font-weight: 500;
+    color: rgb(85, 127, 150);
+}
+

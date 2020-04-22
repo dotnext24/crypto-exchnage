@@ -14,6 +14,7 @@ export default class Exchange extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            showExchangeFee:false,
             currentStep:1,
             showConnectWalletPopup: false,
             sendCurrency: {},
@@ -207,6 +208,12 @@ export default class Exchange extends Component {
         return this.state.totalEstimatedUsd<parseFloat(process.env.REACT_APP_DEFAULT_MIN_ALLOWED_AMOUNT_IN_USD).toFixed(2)
     }
 
+    toggleShowExchangeFee=()=>{
+        this.setState({
+            showExchangeFee:!this.state.showExchangeFee
+        })
+    }
+
     render() {
 
         return (
@@ -274,31 +281,7 @@ export default class Exchange extends Component {
                                     </div>
                                     {this.state.showReceiveCurrency && <CurrencyDropdown onSelect={this.onReceiveCurrencySelect} onClose={this.handleShowReceiveCurrency}></CurrencyDropdown>}
                                     {!this.state.showReceiveCurrency && <div className="styled__DropListWrapper-tlgv5r-0 bZzVdI"></div>}
-
-                                    {/* <div className="styled__DropListWrapper-tlgv5r-0 bZzVdI">
-                                        <div id="currency_droplist_to" className="cl-droplist  searchable sc-gqjmRU gywoMT">
-                                            <div className="sc-cSHVUG jRcMnK">
-                                                <div className="sc-kAzzGY bOMLKt">
-                                                    <i style={{ "display": "inline-block", "vertical-align": "middle" }}>
-                                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M7.22222 13.4444C10.6587 13.4444 13.4444 10.6587 13.4444 7.22222C13.4444 3.78578 10.6587 1 7.22222 1C3.78578 1 1 3.78578 1 7.22222C1 10.6587 3.78578 13.4444 7.22222 13.4444Z" stroke="#80A3B6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                                            <path d="M15.0005 14.9995L11.6172 11.6162" stroke="#80A3B6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                                        </svg>
-                                                    </i>
-                                                    <input type="text" placeholder="Type a currency or ticker" value="" />
-                                                </div>
-                                                <button type="button" tabindex="-1" className="sc-chPdSV iEQJel">
-                                                    <i style={{ "display": "inline-block", "vertical-align": "middle" }}>
-                                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M14 2L2 14" stroke="#80A3B6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                                            <path d="M2 2L14 14" stroke="#80A3B6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                                        </svg>
-                                                    </i>
-                                                </button>
-                                            </div>
-                                            <ul className="sc-dnqmqq sc-VigVT gKLAiY"></ul>
-                                        </div>
-                                    </div>
-                                     */}
+                                    
                                     <span className="bottom-label">Exchange Rate: <text>1 {this.state.receiveCurrency.SYMBOL ? this.state.receiveCurrency.SYMBOL : ''}= ${this.state.receiveCurrency.usdRate ? this.state.receiveCurrency.usdRate : 0}</text></span>
 
                                 </div>
@@ -313,17 +296,18 @@ export default class Exchange extends Component {
                     <section className="styled__Block-sc-1dgkj28-2 eoWQrT sc-uJMKN hfOMXj transaction-detail">
                         <div className="styled__AccordionContent-sc-1dgkj28-4 eaQuem">
                             <div className="accordion-content">
-                                <div style={{ display: 'none' }} className="styled__TransactionDetalsTable-sc-1dgkj28-7 WqVkd">
-                                    <div className="row"><div className="label">Exchange fee 0.25%</div><div className="value">0.0106698 ETH</div></div>
-                                </div>
-                                <div>
+                               {this.state.showExchangeFee && <div  className="styled__TransactionDetalsTable-sc-1dgkj28-7 WqVkd">
+                                    <div className="row"><div className="label">Exchange fee: 0.25% , Estimated arrival: 5-30 mins</div></div>
+                                </div>} 
+                                
+                                {!this.state.showExchangeFee && <div>
                                     <div className="styled__TransactionDetalsLabel-sc-1dgkj28-6 bxVGjg">
                                         <svg width="18" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.7143 6.00028H10.4286L8.71428 11.1431L5.28571 0.857422L3.57142 6.00028H1.28571" stroke="#557F96" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
                                         <span>Transaction details</span>
                                     </div>
-                                </div>
+                                </div>}
                             </div>
-                            <div className="accordion-toggle-button">
+                            <div onClick={this.toggleShowExchangeFee.bind(this)} className="accordion-toggle-button">
                                 {/* <span className="arrow-down-icon styled__SvgIcon-sc-1dgkj28-5 idEyaG" width="1rem" height="0.6rem"></span> */}
                                 <span className="arrow-down-icon styled__SvgIcon-sc-1dgkj28-5 idEyaG" width="1rem" height="0.6rem"></span>
                             </div>
