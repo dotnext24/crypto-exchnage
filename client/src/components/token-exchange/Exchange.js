@@ -7,11 +7,14 @@ import Account from '../shared/AccountNumber';
 import Connections from '../shared/Connections';
 import Balance from '../shared/Balance';
 import { getDefaultTokens } from './../../utils/TokenIcon'
+import OrderDetails from './OrderDetails';
+import NextStepText from '../shared/NextStepText';
 
 export default class Exchange extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            currentStep:1,
             showConnectWalletPopup: false,
             sendCurrency: {},
             receiveCurrency: {},
@@ -28,6 +31,8 @@ export default class Exchange extends Component {
         this.handleShowReceiveCurrency = this.handleShowReceiveCurrency.bind(this);
         this.handleShowConnectWalletPopup = this.handleShowConnectWalletPopup.bind(this);
         this.handleSendValueChange = this.handleSendValueChange.bind(this);
+        this.handleNext=this.handleNext.bind(this)
+        this.handleOnBackClick=this.handleOnBackClick.bind(this)
 
     }
 
@@ -49,10 +54,15 @@ export default class Exchange extends Component {
                     if (res_Recieve.success && Object.values(res_Recieve.data).length > 0 && res_Send.success && Object.values(res_Send.data).length > 0) {
                         const send_rate = Object.values(Object.values(res_Send.data)[0])[0];                       
                         const receive_rate = Object.values(Object.values(res_Recieve.data)[0])[0];                       
-                    
+                        const minimunSendAmount=(parseFloat(process.env.REACT_APP_DEFAULT_MIN_ALLOWED_AMOUNT_IN_USD).toFixed(2)/send_rate).toFixed(8);
+                        const minimunRecieveAmount=(parseFloat(process.env.REACT_APP_DEFAULT_MIN_ALLOWED_AMOUNT_IN_USD).toFixed(2)/receive_rate).toFixed(8);
+                        const totalEstimatedUsd = (minimunSendAmount * send_rate).toFixed(2);
                         this.setState({
                             sendCurrency: { ...sendCurrency, usdRate: send_rate },
                             receiveCurrency: { ...receiveCurrency, usdRate: receive_rate },
+                            sendValue:minimunSendAmount,
+                            receiveValue:minimunRecieveAmount,
+                            totalEstimatedUsd:totalEstimatedUsd
                         })
                     }
 
@@ -175,11 +185,35 @@ export default class Exchange extends Component {
         return body;
     };
 
+    handleNext=()=>{
+        this.setState({
+            currentStep:2
+        })
+    }
+
+    handleOnBackClick=()=>{
+        this.setState({
+            currentStep:1
+        })
+    }
+
+    isValid=()=>{
+        return this.state.sendValue>0 && this.state.receiveValue>0 && this.state.totalEstimatedUsd>0
+    }
+
+    isMinimunEstimatedAmount=()=>{
+        const minimunSendAmount=(parseFloat(process.env.REACT_APP_DEFAULT_MIN_ALLOWED_AMOUNT_IN_USD).toFixed(2)/this.state.sendCurrency.usdRate).toFixed(8);
+        console.log('this.state.totalEstimatedUsd  minimunSendAmount',this.state.totalEstimatedUsd, minimunSendAmount)
+        return this.state.totalEstimatedUsd<parseFloat(process.env.REACT_APP_DEFAULT_MIN_ALLOWED_AMOUNT_IN_USD).toFixed(2)
+    }
+
     render() {
 
         return (
             <React.Fragment>
-                <div className="styled__PageWrapper-sc-1dgkj28-0 kGkjno">
+
+               
+               { this.state.currentStep==1 && <div className="styled__PageWrapper-sc-1dgkj28-0 kGkjno">
                     <section className="connect-wallet" >
                         <Account action={this.handleShowConnectWalletPopup}></Account>
 
@@ -192,7 +226,7 @@ export default class Exchange extends Component {
 
                                 <div className="currency-block styled__WrapperCurrency-g3y0ua-0 rGnYa send-box" style={{}}>
                                     <span className="currency-block__label styled__CurrencyLabel-g3y0ua-1 biCxOe">You send</span>
-                                    <input onChange={this.handleSendValueChange} value={this.state.sendValue} maxLength="16" className="currency-block__value styled__CurrencyValue-g3y0ua-2 dtUlLd" />
+                                    <input style={this.isValid()?{}:{'border-color': 'rgba(255, 176, 0, 0.294)'}} onChange={this.handleSendValueChange} value={this.state.sendValue} maxLength="16" className="currency-block__value styled__CurrencyValue-g3y0ua-2 dtUlLd" />
                                     <div className="currency-block__currency styled__CurrencyButtonWrapper-g3y0ua-3 jCKRds">
                                         <button onClick={this.handleShowSendCurrency.bind()} className="currency-block__switch switchable styled__CurrencySwitch-g3y0ua-4 ZmPKt" type="button" id="currency_button_from">
                                             <div className="full-name-label">{this.state.sendCurrency && this.state.sendCurrency.NAME ? this.state.sendCurrency.NAME : "US Dollar"}</div>{this.state.sendCurrency && this.state.sendCurrency.SYMBOL ? this.state.sendCurrency.SYMBOL : "usd"}
@@ -201,8 +235,16 @@ export default class Exchange extends Component {
                                     {this.state.showSendCurrency && <CurrencyDropdown onSelect={this.onSendCurrencySelect} onClose={this.handleShowSendCurrency}></CurrencyDropdown>}
                                     {!this.state.showSendCurrency && <div className="styled__DropListWrapper-tlgv5r-0 bZzVdI"></div>}
 
-                                    <span className="bottom-label">Estimated Value: <text>${this.state.totalEstimatedUsd}</text></span>
+                                   {!this.isMinimunEstimatedAmount() && <span className="bottom-label">Estimated Value: <text>${this.state.totalEstimatedUsd}</text></span>}
+                                    {this.isMinimunEstimatedAmount() && <div className="styled__AlertsBlock-th509d-4 cGhoPf">
+                                        <div type="yellow" className="styled__Alert-bkwpwx-0 hEMJGK">Minimum amount: 0.001875 BTC<div className="styled__ButtonWrapper-bkwpwx-1 cPyZOh">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="white" fill-rule="evenodd" d="M12.961 11.999l6.722 6.723a.678.678 0 1 1-.961.958L12 12.96 5.278 19.68a.68.68 0 0 1-.96 0 .678.678 0 0 1 0-.958l6.72-6.723-6.72-6.722a.68.68 0 1 1 .96-.96L12 11.04l6.722-6.722a.68.68 0 1 1 .961.96L12.96 12z"></path></svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    }
                                 </div>
+
 
                                 <div className="styled__AlertsBlock-th509d-4 cGhoPf">
                                     <div className="switch-block">
@@ -290,9 +332,12 @@ export default class Exchange extends Component {
 
 
                     <section className="styled__Block-sc-1dgkj28-2 ioLDbv sc-uJMKN hfOMXj">
-                        <button type="button" className="bg-primary cl-button  sc-ifAKCX dVuRDF">Connect to a wallet</button>
+                        <NextStepText  disabled={!this.isValid()} OnConnectWallet={this.handleShowConnectWalletPopup} OnNextStep={this.handleNext} ></NextStepText>
                     </section>
                 </div>
+                }
+
+{this.state.currentStep==2 && <OrderDetails OnClickBack={this.handleOnBackClick}></OrderDetails>}
 
                 {this.renderWalletModel(this.handleShowConnectWalletPopup)}
             </React.Fragment>
