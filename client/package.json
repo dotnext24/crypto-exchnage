@@ -3,13 +3,6 @@
   "version": "0.1.0",
   "license": "MIT",
   "dependencies": {
-    "bootstrap": "^4.4.1",
-    "react": "^16.13.1",
-    "react-bootstrap": "^1.0.0",
-    "react-dom": "^16.13.1",
-    "react-router-dom": "5.1.2",
-    "react-scripts": "3.4.1",
-    "uuid": "7.0.3",
     "@ethersproject/providers": "latest",
     "@ethersproject/units": "latest",
     "@web3-react/abstract-connector": "latest",
@@ -25,7 +18,15 @@
     "@web3-react/torus-connector": "latest",
     "@web3-react/trezor-connector": "latest",
     "@web3-react/walletconnect-connector": "latest",
-    "@web3-react/walletlink-connector": "latest"
+    "@web3-react/walletlink-connector": "latest",
+    "bootstrap": "^4.4.1",
+    "react": "^16.13.1",
+    "react-bootstrap": "^1.0.0",
+    "react-dom": "^16.13.1",
+    "react-router-dom": "5.1.2",
+    "react-scripts": "3.4.1",
+    "uuid": "7.0.3",
+    "web3-provider-engine": "^15.0.7"
   },
   "scripts": {
     "start": "react-scripts start",
