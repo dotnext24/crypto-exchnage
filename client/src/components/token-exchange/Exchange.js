@@ -23,7 +23,9 @@ export default class Exchange extends Component {
             receiveValue: 0,
             showSendCurrency: false,
             showReceiveCurrency: false,
-            totalEstimatedUsd: 0
+            totalEstimatedUsd: 0,
+            minimumSendToken:0,
+            totalEstimatedUsd:10
         }
         this.handleSwitchCurrency = this.handleSwitchCurrency.bind(this);
         this.onSendCurrencySelect = this.onSendCurrencySelect.bind(this);
@@ -63,7 +65,8 @@ export default class Exchange extends Component {
                             receiveCurrency: { ...receiveCurrency, usdRate: receive_rate },
                             sendValue:minimunSendAmount,
                             receiveValue:minimunRecieveAmount,
-                            totalEstimatedUsd:totalEstimatedUsd
+                            totalEstimatedUsd:totalEstimatedUsd,
+                            minimumSendToken:minimunSendAmount
                         })
                     }
 
@@ -107,11 +110,12 @@ export default class Exchange extends Component {
                 const totalEstimatedUsd = (this.state.sendValue * rate).toFixed(2);
                 const receiveCurrency_rate = this.state.receiveCurrency.usdRate ? this.state.receiveCurrency.usdRate : 0;
                 const receiveValue = totalEstimatedUsd / receiveCurrency_rate;
-
+                const minimunSendAmount=(parseFloat(process.env.REACT_APP_DEFAULT_MIN_ALLOWED_AMOUNT_IN_USD).toFixed(2)/rate).toFixed(8);
                 this.setState({
                     sendCurrency: { ...currency, usdRate: rate },
                     totalEstimatedUsd: totalEstimatedUsd,
-                    receiveValue
+                    receiveValue,
+                    minimumSendToken:minimunSendAmount
                 })
                 console.log('sendCurrency rate', res)
             }
@@ -155,9 +159,13 @@ export default class Exchange extends Component {
     handleSwitchCurrency = () => {
         const sendCurrency = this.state.sendCurrency;
         const receiveCurrency = this.state.receiveCurrency;
+        const minimunSendAmount=(parseFloat(process.env.REACT_APP_DEFAULT_MIN_ALLOWED_AMOUNT_IN_USD).toFixed(2)/receiveCurrency.usdRate).toFixed(8);
         this.setState({
             sendCurrency: receiveCurrency,
-            receiveCurrency: sendCurrency
+            receiveCurrency: sendCurrency,
+            minimumSendToken:minimunSendAmount
+        },()=>{
+            this.handleSendValueChange({target:{value:this.state.sendValue}})
         })
     }
 
@@ -203,9 +211,8 @@ export default class Exchange extends Component {
     }
 
     isMinimunEstimatedAmount=()=>{
-        const minimunSendAmount=(parseFloat(process.env.REACT_APP_DEFAULT_MIN_ALLOWED_AMOUNT_IN_USD).toFixed(2)/this.state.sendCurrency.usdRate).toFixed(8);
-        console.log('this.state.totalEstimatedUsd  minimunSendAmount',this.state.totalEstimatedUsd, minimunSendAmount)
-        return this.state.totalEstimatedUsd<parseFloat(process.env.REACT_APP_DEFAULT_MIN_ALLOWED_AMOUNT_IN_USD).toFixed(2)
+       console.log(parseFloat(this.state.minimumSendToken).toFixed(8),parseFloat(process.env.REACT_APP_DEFAULT_MIN_ALLOWED_AMOUNT_IN_USD).toFixed(2),parseFloat(this.state.totalEstimatedUsd).toFixed(2)<parseFloat(process.env.REACT_APP_DEFAULT_MIN_ALLOWED_AMOUNT_IN_USD).toFixed(2))
+        return (parseFloat(this.state.totalEstimatedUsd).toFixed(2)-parseFloat(process.env.REACT_APP_DEFAULT_MIN_ALLOWED_AMOUNT_IN_USD).toFixed(2))<0
     }
 
     toggleShowExchangeFee=()=>{
@@ -244,7 +251,7 @@ export default class Exchange extends Component {
 
                                    {!this.isMinimunEstimatedAmount() && <span className="bottom-label">Estimated Value: <text>${this.state.totalEstimatedUsd}</text></span>}
                                     {this.isMinimunEstimatedAmount() && <div className="styled__AlertsBlock-th509d-4 cGhoPf">
-                                        <div type="yellow" className="styled__Alert-bkwpwx-0 hEMJGK">Minimum amount: 0.001875 BTC<div className="styled__ButtonWrapper-bkwpwx-1 cPyZOh">
+                                        <div type="yellow" className="styled__Alert-bkwpwx-0 hEMJGK">Minimum amount: {this.state.minimumSendToken} {this.state.sendCurrency.SYMBOL}<div className="styled__ButtonWrapper-bkwpwx-1 cPyZOh">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="white" fill-rule="evenodd" d="M12.961 11.999l6.722 6.723a.678.678 0 1 1-.961.958L12 12.96 5.278 19.68a.68.68 0 0 1-.96 0 .678.678 0 0 1 0-.958l6.72-6.723-6.72-6.722a.68.68 0 1 1 .96-.96L12 11.04l6.722-6.722a.68.68 0 1 1 .961.96L12.96 12z"></path></svg>
                                             </div>
                                         </div>

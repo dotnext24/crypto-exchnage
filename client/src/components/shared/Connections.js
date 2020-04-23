@@ -72,9 +72,9 @@ export default function Connections() {
   const connectorsByName = {
     Metamask: injected,    
     WalletConnect: walletconnect,
-    Fortmatic: fortmatic,
-    Portis: portis,
-    Torus: torus
+    Coinbase: walletlink,
+    Ledger: ledger,
+    Trezor: trezor,
   }
   
    
