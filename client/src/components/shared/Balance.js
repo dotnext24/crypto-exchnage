@@ -30,7 +30,7 @@ export default function Balance() {
         }
       }
     }, [account, library, chainId]) // ensures refresh if referential identity of library doesn't change across chainIds
-  
+  console.log('library',library)
     return (
       <>
           {!!balance

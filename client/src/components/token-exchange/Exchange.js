@@ -25,7 +25,11 @@ export default class Exchange extends Component {
             showReceiveCurrency: false,
             totalEstimatedUsd: 0,
             minimumSendToken:0,
-            totalEstimatedUsd:10
+            totalEstimatedUsd:10,
+            pendingRequest:false,
+            orderDetails:null,
+            transDetails:null,
+            requestError:null
         }
         this.handleSwitchCurrency = this.handleSwitchCurrency.bind(this);
         this.onSendCurrencySelect = this.onSendCurrencySelect.bind(this);
@@ -36,7 +40,9 @@ export default class Exchange extends Component {
         this.handleSendValueChange = this.handleSendValueChange.bind(this);
         this.handleNext=this.handleNext.bind(this)
         this.handleOnBackClick=this.handleOnBackClick.bind(this)
-
+        this.handleOnTransactionComplete=this.handleOnTransactionComplete.bind(this)
+        this.handleOnInitTransaction=this.handleOnInitTransaction.bind(this)
+        this.handleOnTransactionFail=this.handleOnTransactionFail.bind(this)
     }
 
 
@@ -202,7 +208,11 @@ export default class Exchange extends Component {
 
     handleOnBackClick=()=>{
         this.setState({
-            currentStep:1
+            currentStep:1,
+            pendingRequest:false,
+            orderDetails:null,
+            transDetails:null,
+            requestError:null
         })
     }
 
@@ -219,6 +229,32 @@ export default class Exchange extends Component {
         this.setState({
             showExchangeFee:!this.state.showExchangeFee
         })
+    }
+
+    handleOnInitTransaction=(orderDetails)=>{
+        this.setState({
+            pendingRequest:true,
+            orderDetails:orderDetails,
+            transDetails:null,
+            requestError:null
+        })
+    }
+
+    handleOnTransactionComplete=(transDetails)=>{
+        this.setState({
+            pendingRequest:false,
+            transDetails:transDetails,
+            requestError:null
+        })
+    }
+
+    handleOnTransactionFail=(error)=>{
+        this.setState({
+            pendingRequest:false,
+            transDetails:null,
+            requestError:error
+        })
+
     }
 
     render() {
@@ -323,12 +359,28 @@ export default class Exchange extends Component {
 
 
                     <section className="styled__Block-sc-1dgkj28-2 ioLDbv sc-uJMKN hfOMXj">
-                        <NextStepText  disabled={!this.isValid()} OnConnectWallet={this.handleShowConnectWalletPopup} OnNextStep={this.handleNext} ></NextStepText>
+                        <NextStepText 
+                         sendCurrency={this.state.sendCurrency}
+                         receiveCurrency={this.state.receiveCurrency}
+                         sendValue={this.state.sendValue}
+                         receiveValue={this.state.receiveValue}
+                         disabled={!this.isValid()} 
+                         OnConnectWallet={this.handleShowConnectWalletPopup}
+                         OnNextStep={this.handleNext} 
+                         OnInitTransaction={this.handleOnInitTransaction}
+                         OnTransactionComplete={this.handleOnTransactionComplete}
+                         OnTransactionFail={this.handleOnTransactionFail}
+                         ></NextStepText>
                     </section>
                 </div>
                 }
 
-{this.state.currentStep==2 && <OrderDetails OnClickBack={this.handleOnBackClick}></OrderDetails>}
+{this.state.currentStep==2 && <OrderDetails 
+ pendingRequest={this.state.pendingRequest}
+ orderDetails={this.state.orderDetails}
+ transDetails={this.state.transDetails}
+ requestError={this.state.requestError}
+OnClickBack={this.handleOnBackClick}></OrderDetails>}
 
                 {this.renderWalletModel(this.handleShowConnectWalletPopup)}
             </React.Fragment>

@@ -69,7 +69,7 @@ export default function Connections() {
   //   Torus: torus
   // }
 
-  const connectorsByName = {
+   const connectorsByName = {
     Metamask: injected,    
     WalletConnect: walletconnect,
     Coinbase: walletlink,
@@ -87,6 +87,7 @@ export default function Connections() {
   
                  {Object.keys(connectorsByName).map(name => {
           const currentConnector = connectorsByName[name]
+          currentConnector.name=name;
           const activating = currentConnector === activatingConnector
           const connected = currentConnector === connector
           const disabled = !triedEager || !!activatingConnector || connected || !!error
