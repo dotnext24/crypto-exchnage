@@ -14,28 +14,29 @@ import { TorusConnector } from '@web3-react/torus-connector'
 const POLLING_INTERVAL = 12000
 const RPC_URLS = {
   1: process.env.REACT_APP_RPC_URL_1,
+  3: process.env.REACT_APP_RPC_URL_3, 
   4: process.env.REACT_APP_RPC_URL_4 
 }
 
-console.log('rpc',process.env)
+
 
 export const injected = new InjectedConnector({ supportedChainIds: [1, 3, 4, 5, 42] })
 
 export const network = new NetworkConnector({
-  urls: { 1: RPC_URLS[1], 4: RPC_URLS[4] },
+  urls: { 1: RPC_URLS[1],3: RPC_URLS[3], 4: RPC_URLS[4]  },
   defaultChainId: 1,
   pollingInterval: POLLING_INTERVAL
 })
 
 export const walletconnect = new WalletConnectConnector({
-  rpc: { 1: RPC_URLS[1] },
+  rpc: { 1: RPC_URLS[1]  },
   bridge: 'https://bridge.walletconnect.org',
   qrcode: true,
   pollingInterval: POLLING_INTERVAL
 })
 
 export const walletlink = new WalletLinkConnector({
-  url: RPC_URLS[1],
+  url: RPC_URLS[3],
   appName: 'web3-react example'
 })
 

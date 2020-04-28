@@ -21,8 +21,9 @@ class App extends Component {
 
   componentDidMount() {
     this.callApi()
-      .then(res => console.log('respons token',res))
-      .catch(err => console.log(err));
+      .then(res =>{})
+      .catch(err => {});
+      this.handleSubmit();
   }
 
   callApi = async () => {
@@ -34,14 +35,18 @@ class App extends Component {
     return body;
   };
 
-  handleSubmit = async e => {
-    e.preventDefault();
-    const response = await fetch('/api/world', {
+  handleSubmit = async () => {
+    const records = [
+      {name: 'Bob',  lang: 'French, English'},
+      {name: 'Mary', lang: 'English'}
+  ];
+   
+    const response = await fetch('/api/transaction', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ post: this.state.post }),
+      body: JSON.stringify({ post: records }),
     });
     const body = await response.text();
 
@@ -49,7 +54,7 @@ class App extends Component {
   };
 
   render() {
-    console.log('env',process.env)
+    
     return <div>
        <Router>
            

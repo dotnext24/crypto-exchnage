@@ -2,8 +2,7 @@ import {utils} from 'ethers'
 
 export function toWei(ether){
     let wei = utils.parseEther('0.1');
-console.log(wei.toString(10));
-console.log(sanitizeHex(wei.toString(10)));
+
    return wei.toString(10);
 }
 

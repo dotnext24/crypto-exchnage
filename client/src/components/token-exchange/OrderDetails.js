@@ -3,7 +3,7 @@ import './style.css'
 
 export default function OrderDetails(props) {
     const { pendingRequest,orderDetails,transDetails,requestError}=props
-    console.log('order details= pendingRequest,orderDetails,transDetails,requestError',pendingRequest,orderDetails,transDetails,requestError)
+   
     return (
         <React.Fragment>
            {orderDetails && <div className="styled__PageWrapper-sc-1dgkj28-0 kGkjno ">

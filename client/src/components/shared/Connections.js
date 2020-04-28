@@ -76,8 +76,10 @@ export default function Connections() {
     Ledger: ledger,
     Trezor: trezor,
   }
+
+ 
   
-   
+  
         return (
             <React.Fragment>
               <div class="wallets">
@@ -103,12 +105,15 @@ export default function Connections() {
                   window.open("https://metamask.io/");
                 }
                 else{
+                  //deactivate();
+                  //connector.close();
                 setActivatingConnector(currentConnector)
+                
                 activate(connectorsByName[name])
                 }
               }}>
                  {activating && <span>....</span>}
-                {connected && (
+                {connected && !error && (
                   <span  style={{marginRight:'5px'}} role="img" aria-label="check">
                     ✅
                   </span>

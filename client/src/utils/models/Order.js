@@ -1,5 +1,5 @@
 export class Order{
-    constructor(OrderId,Timestamp, WALLET_ADDRESS, FROM_SYMBOL, TO_SYMBOL,FROM_AMOUNT,TO_AMOUNT,FROM_PRICE,TO_PRICE, RECIEVE_ADDRESS,EXCHANGE_FEE){
+    constructor(OrderId,Timestamp, WALLET_ADDRESS, FROM_SYMBOL, TO_SYMBOL,FROM_AMOUNT,TO_AMOUNT,FROM_PRICE,TO_PRICE, RECIEVE_ADDRESS,EXCHANGE_FEE,TRANSACTION_HASH){
        this.OrderId=OrderId;
        this.Timestamp=Timestamp || new Date().toString();
        this.WALLET_ADDRESS=WALLET_ADDRESS;
@@ -11,5 +11,6 @@ export class Order{
        this.TO_PRICE=TO_PRICE;
        this.RECIEVE_ADDRESS=RECIEVE_ADDRESS;
        this.EXCHANGE_FEE=EXCHANGE_FEE;
+       this.TRANSACTION_HASH=TRANSACTION_HASH;
     }    
 }

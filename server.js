@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
+const csvhandler=require('./csvhandler');
 //1. Import coingecko-api
 const CoinGecko = require('coingecko-api');
 
@@ -16,6 +17,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // API calls
 app.get('/api/hello', (req, res) => {
   res.send({ express: 'Hello From Express' });
+});
+
+app.post('/api/transaction', (req, res) => {
+  let transactions=req.body;
+  csvhandler.writeTransaction(transactions)
+  res.send({express: transactions});
 });
 
 app.get('/api/token_price/:contract_addresses/:vs_currency', async (req, res) => {
@@ -44,7 +51,7 @@ app.post('/api/world', (req, res) => {
     `I received your POST request. This is what you sent me: ${req.body.post}`,
   );
 });
-console.log(process.env.NODE_ENV)
+
 if (process.env.NODE_ENV === 'production') {
   // Serve any static files
   app.use(express.static(path.join(__dirname, 'client/build')));

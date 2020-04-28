@@ -23,9 +23,7 @@ export default class CurrencyDropdown extends Component {
         })
     }
 
-    onSelect=(key)=>{
-       console.log('selected key',key);
-       ;
+    onSelect=(key)=>{      
        this.props.onSelect({...this.state.currencies[key],key});
     }
 
@@ -57,7 +55,6 @@ export default class CurrencyDropdown extends Component {
         let currencies=this.state.filteredCurrencies;
         if(!currencies)
         return "";
-        console.log('currencies',currencies)
         return (
             <div className="styled__DropListWrapper-tlgv5r-0 bZzVdI">
             <div id="currency_droplist_from" className="cl-droplist  searchable sc-gqjmRU gywoMT">

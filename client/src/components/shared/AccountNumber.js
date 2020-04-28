@@ -18,8 +18,8 @@ export default function AccountNumber(props) {
   useInactiveListener()
  
   if(active && account && account.length>0)
-        return (<a  onClick={() => {deactivate();}}>{account.substr(0,10)}</a>
+        return (<a  onClick={() => {deactivate();connector.close()}}>{account.substr(0,10)}</a>
         )
-  else return <a onClick={props.action}>Connect Wallet</a>;
+  else return <a onClick={()=>{props.action()}}>Connect Wallet</a>;
     
 }

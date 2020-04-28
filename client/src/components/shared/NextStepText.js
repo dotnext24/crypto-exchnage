@@ -22,8 +22,9 @@ import {
 } from './../../connectors'
 
 function initWeb3(provider) {
+  
   const web3 = new Web3(provider);
-  console.log('web3',web3)
+
   web3.eth.extend({
     methods: [
       {
@@ -76,13 +77,14 @@ export default function NextStepText(props) {
     sendCurrency.usdRate,
     receiveCurrency.usdRate,
     toAddress,
-    exchangeFee
+    exchangeFee,
+    ""
     )
     
    
     const tx = await formatTransaction(amount, account, toAddress, chainId);
     
-    console.log('formatTransaction',tx)
+    
     try {
      
       // toggle pending request indicator
@@ -112,11 +114,13 @@ export default function NextStepText(props) {
         orderId:orderId
       };
 
+      orderDetails.TRANSACTION_HASH=result;
+
       // display result  
       
       setPendingRequest(false);
       settransactionResult(formattedResult || null);
-      OnTransactionComplete(formattedResult);
+      OnTransactionComplete(formattedResult,orderDetails);
       
     } catch (error) {
       console.error(error); // tslint:disable-line

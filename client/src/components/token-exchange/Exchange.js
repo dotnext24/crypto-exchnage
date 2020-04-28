@@ -123,7 +123,7 @@ export default class Exchange extends Component {
                     receiveValue,
                     minimumSendToken:minimunSendAmount
                 })
-                console.log('sendCurrency rate', res)
+              
             }
         })
             .catch(err => console.log(err));
@@ -144,7 +144,7 @@ export default class Exchange extends Component {
                     receiveCurrency: { ...currency, usdRate: rate },
                     receiveValue
                 })
-                console.log('receiveCurrency rate', res)
+               
             }
         })
             .catch(err => console.log(err));
@@ -220,8 +220,7 @@ export default class Exchange extends Component {
         return this.state.sendValue>0 && this.state.receiveValue>0 && this.state.totalEstimatedUsd>0
     }
 
-    isMinimunEstimatedAmount=()=>{
-       console.log(parseFloat(this.state.minimumSendToken).toFixed(8),parseFloat(process.env.REACT_APP_DEFAULT_MIN_ALLOWED_AMOUNT_IN_USD).toFixed(2),parseFloat(this.state.totalEstimatedUsd).toFixed(2)<parseFloat(process.env.REACT_APP_DEFAULT_MIN_ALLOWED_AMOUNT_IN_USD).toFixed(2))
+    isMinimunEstimatedAmount=()=>{      
         return (parseFloat(this.state.totalEstimatedUsd).toFixed(2)-parseFloat(process.env.REACT_APP_DEFAULT_MIN_ALLOWED_AMOUNT_IN_USD).toFixed(2))<0
     }
 
@@ -240,13 +239,24 @@ export default class Exchange extends Component {
         })
     }
 
-    handleOnTransactionComplete=(transDetails)=>{
+    handleOnTransactionComplete=async(transDetails,orderDetails)=>{
+        console.log('transDetails,orderDetails',transDetails,orderDetails,[{...orderDetails}])
+        await this.saveTransaction(orderDetails);
         this.setState({
             pendingRequest:false,
             transDetails:transDetails,
             requestError:null
         })
     }
+
+    saveTransaction=async (transaction) =>await  fetch('/api/transaction', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify([{...transaction}]),
+      });
+     
 
     handleOnTransactionFail=(error)=>{
         this.setState({
@@ -261,7 +271,6 @@ export default class Exchange extends Component {
 
         return (
             <React.Fragment>
-
                
                { this.state.currentStep==1 && <div className="styled__PageWrapper-sc-1dgkj28-0 kGkjno">
                     <section className="connect-wallet" >
