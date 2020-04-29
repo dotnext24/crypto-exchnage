@@ -83,10 +83,7 @@ export default function Connections() {
         return (
             <React.Fragment>
               <div class="wallets">
-              <div className="row">
-    
-   
-  
+              <div className="row">  
                  {Object.keys(connectorsByName).map(name => {
           const currentConnector = connectorsByName[name]
           currentConnector.name=name;
