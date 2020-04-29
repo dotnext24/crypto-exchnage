@@ -20,6 +20,7 @@ import {
   squarelink,
   torus
 } from './../../connectors'
+import { formatDate } from '../../utils/helpers';
 
 function initWeb3(provider) {
   
@@ -68,7 +69,7 @@ export default function NextStepText(props) {
     const sendAmount=sendValue;
     const amount=web3.utils.toWei(sendAmount,'ether');
     let orderDetails= new Order(orderId,
-    new Date().toString(),
+    formatDate(new Date()),
     account,
     sendCurrency.SYMBOL,
     receiveCurrency.SYMBOL,
