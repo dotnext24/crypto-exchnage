@@ -1,6 +1,7 @@
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 const csvWriter = createCsvWriter({
     path: 'transactions.csv',
+    append:true,    
     header: [
         {id: 'OrderId', title: 'OrderId'},
         {id: 'Timestamp', title: 'Timestamp'},
@@ -18,11 +19,7 @@ const csvWriter = createCsvWriter({
     ]
 });
  
-const records = [
-    {name: 'Bob',  lang: 'French, English'},
-    {name: 'Mary', lang: 'English'}
-];
- 
+
 
 function writeTransaction(transactionDetail){
    

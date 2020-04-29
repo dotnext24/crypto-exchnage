@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
-import { useWeb3React} from '@web3-react/core'
+import { OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { useWeb3React } from '@web3-react/core'
 import { useEagerConnect, useInactiveListener } from '../../hooks'
 
 export default function AccountNumber(props) {
 
   const context = useWeb3React()
-  const { connector, account,  deactivate, active, error } = context
+  const { connector, account, deactivate, active, error } = context
   const [activatingConnector, setActivatingConnector] = React.useState()
   React.useEffect(() => {
     if (activatingConnector && activatingConnector === connector) {
@@ -16,10 +17,22 @@ export default function AccountNumber(props) {
   const triedEager = useEagerConnect()
 
   useInactiveListener()
- 
-  if(active && account && account.length>0)
-        return (<a  onClick={() => {deactivate();connector.close()}}>{account.substr(0,10)}</a>
-        )
-  else return <a onClick={()=>{props.action()}}>Connect Wallet</a>;
-    
+
+  if (active && account && account.length > 0)
+    return (<a onClick={() => { deactivate(); if (connector.close) connector.close() }}>
+
+      <OverlayTrigger
+        placement="left"
+        overlay={
+          <Tooltip id={`tooltip-account`}>
+            <span>{account}</span>
+          </Tooltip>
+        }
+      >
+        <span>{account.substr(0, 10)}</span>
+      </OverlayTrigger>{' '}
+    </a>
+    )
+  else return <a onClick={() => { props.action() }}>Connect Wallet</a>;
+
 }
