@@ -703,9 +703,24 @@
     border-color: transparent transparent rgb(255, 176, 0);
 }
 
-.transaction-detail label{
-    font-size: 14px;
-    font-weight: 500;
+.transaction-detail{
+    margin: auto;
+    width: 500px;
+    height: 20px;
+    margin-top: -35px;
+    margin-bottom: 35px;
+    font-size: small;
     color: rgb(85, 127, 150);
 }
 
+.transaction-detail .WqVkd .label{
+    font-size: 14px;
+    font-weight: 500;
+    color: rgb(85, 127, 150);
+    width: 100%;
+}
+
+.transaction-detail .WqVkd .label span{
+    color:rgb(57, 66, 71);
+    font-weight:600;
+}

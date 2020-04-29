@@ -29,7 +29,11 @@ export default class Exchange extends Component {
             pendingRequest:false,
             orderDetails:null,
             transDetails:null,
-            requestError:null
+            requestError:null,
+            exchangeFee_Percent:parseFloat(process.env.REACT_APP_DEFAULT_EXCHANGE_FEE),
+            exchangeFee:0
+
+
         }
         this.handleSwitchCurrency = this.handleSwitchCurrency.bind(this);
         this.onSendCurrencySelect = this.onSendCurrencySelect.bind(this);
@@ -63,16 +67,20 @@ export default class Exchange extends Component {
                     if (res_Recieve.success && Object.values(res_Recieve.data).length > 0 && res_Send.success && Object.values(res_Send.data).length > 0) {
                         const send_rate = Object.values(Object.values(res_Send.data)[0])[0];                       
                         const receive_rate = Object.values(Object.values(res_Recieve.data)[0])[0];                       
-                        const minimunSendAmount=(parseFloat(process.env.REACT_APP_DEFAULT_MIN_ALLOWED_AMOUNT_IN_USD).toFixed(2)/send_rate).toFixed(8);
-                        const minimunRecieveAmount=(parseFloat(process.env.REACT_APP_DEFAULT_MIN_ALLOWED_AMOUNT_IN_USD).toFixed(2)/receive_rate).toFixed(8);
+                        const minimunSendAmount=(parseFloat(sendCurrency.MIN_ALLOWED_AMOUNT_IN_USD || process.env.REACT_APP_DEFAULT_MIN_ALLOWED_AMOUNT_IN_USD).toFixed(2)/send_rate).toFixed(8);
+                        const minimunRecieveAmount=(parseFloat(sendCurrency.MIN_ALLOWED_AMOUNT_IN_USD || process.env.REACT_APP_DEFAULT_MIN_ALLOWED_AMOUNT_IN_USD).toFixed(2)/receive_rate).toFixed(8);
                         const totalEstimatedUsd = (minimunSendAmount * send_rate).toFixed(2);
+                        const exchangeFee_Percent=receiveCurrency.EXCHANGE_FEE || this.state.exchangeFee_Percent;
+                        const exchangeFee=(parseFloat(exchangeFee_Percent)*minimunSendAmount/100).toFixed(8);                        
                         this.setState({
                             sendCurrency: { ...sendCurrency, usdRate: send_rate },
                             receiveCurrency: { ...receiveCurrency, usdRate: receive_rate },
                             sendValue:minimunSendAmount,
-                            receiveValue:minimunRecieveAmount,
+                            receiveValue:minimunRecieveAmount-exchangeFee,
                             totalEstimatedUsd:totalEstimatedUsd,
-                            minimumSendToken:minimunSendAmount
+                            minimumSendToken:minimunSendAmount,
+                            exchangeFee_Percent,
+                            exchangeFee
                         })
                     }
 
@@ -115,13 +123,19 @@ export default class Exchange extends Component {
                 const rate = Object.values(Object.values(res.data)[0])[0];
                 const totalEstimatedUsd = (this.state.sendValue * rate).toFixed(2);
                 const receiveCurrency_rate = this.state.receiveCurrency.usdRate ? this.state.receiveCurrency.usdRate : 0;
-                const receiveValue = totalEstimatedUsd / receiveCurrency_rate;
-                const minimunSendAmount=(parseFloat(process.env.REACT_APP_DEFAULT_MIN_ALLOWED_AMOUNT_IN_USD).toFixed(2)/rate).toFixed(8);
+                const receiveValue = (totalEstimatedUsd / receiveCurrency_rate).toFixed(8);
+                const minimunSendAmount=(parseFloat(currency.MIN_ALLOWED_AMOUNT_IN_USD || process.env.REACT_APP_DEFAULT_MIN_ALLOWED_AMOUNT_IN_USD).toFixed(2)/rate).toFixed(8);
+                const exchangeFee_Percent=this.state.receiveCurrency.EXCHANGE_FEE || this.state.exchangeFee_Percent;
+                const exchangeFee=(parseFloat(exchangeFee_Percent)*receiveValue/100).toFixed(8);
+                        
+               
                 this.setState({
                     sendCurrency: { ...currency, usdRate: rate },
                     totalEstimatedUsd: totalEstimatedUsd,
-                    receiveValue,
-                    minimumSendToken:minimunSendAmount
+                    receiveValue:receiveValue-exchangeFee,
+                    minimumSendToken:minimunSendAmount,
+                    exchangeFee_Percent,
+                    exchangeFee
                 })
               
             }
@@ -139,10 +153,15 @@ export default class Exchange extends Component {
             if (res.success && Object.values(res.data).length > 0) {
                 const rate = Object.values(Object.values(res.data)[0])[0];
                 const totalEstimatedUsd = this.state.totalEstimatedUsd;
-                const receiveValue = totalEstimatedUsd / rate;
+                const receiveValue = (totalEstimatedUsd / rate).toFixed(8);
+                const exchangeFee_Percent=currency.EXCHANGE_FEE || this.state.exchangeFee_Percent;
+                const exchangeFee=(parseFloat(exchangeFee_Percent)*receiveValue/100).toFixed(8);
+                        
                 this.setState({
                     receiveCurrency: { ...currency, usdRate: rate },
-                    receiveValue
+                    receiveValue:receiveValue-exchangeFee,
+                    exchangeFee_Percent,
+                    exchangeFee
                 })
                
             }
@@ -165,7 +184,7 @@ export default class Exchange extends Component {
     handleSwitchCurrency = () => {
         const sendCurrency = this.state.sendCurrency;
         const receiveCurrency = this.state.receiveCurrency;
-        const minimunSendAmount=(parseFloat(process.env.REACT_APP_DEFAULT_MIN_ALLOWED_AMOUNT_IN_USD).toFixed(2)/receiveCurrency.usdRate).toFixed(8);
+        const minimunSendAmount=(parseFloat(sendCurrency.MIN_ALLOWED_AMOUNT_IN_USD || process.env.REACT_APP_DEFAULT_MIN_ALLOWED_AMOUNT_IN_USD).toFixed(2)/receiveCurrency.usdRate).toFixed(8);
         this.setState({
             sendCurrency: receiveCurrency,
             receiveCurrency: sendCurrency,
@@ -180,8 +199,11 @@ export default class Exchange extends Component {
         const rate = this.state.sendCurrency.usdRate ? this.state.sendCurrency.usdRate : 0;
         const totalEstimatedUsd = (value * rate).toFixed(2);
         const receiveCurrency_rate = this.state.receiveCurrency.usdRate ? this.state.receiveCurrency.usdRate : 0;
-        const receiveValue = totalEstimatedUsd / receiveCurrency_rate;
-        this.setState({ sendValue: event.target.value, totalEstimatedUsd, receiveValue });
+        const receiveValue = (totalEstimatedUsd / receiveCurrency_rate).toFixed(8);
+        const exchangeFee_Percent=this.state.receiveCurrency.EXCHANGE_FEE || this.state.exchangeFee_Percent;
+        const exchangeFee=(parseFloat(exchangeFee_Percent)*receiveValue/100).toFixed(8);
+        console.log('ex',exchangeFee,receiveValue,receiveValue-exchangeFee)
+        this.setState({ sendValue: event.target.value, totalEstimatedUsd, receiveValue:receiveValue-exchangeFee });
 
     }
 
@@ -221,7 +243,7 @@ export default class Exchange extends Component {
     }
 
     isMinimunEstimatedAmount=()=>{      
-        return (parseFloat(this.state.totalEstimatedUsd).toFixed(2)-parseFloat(process.env.REACT_APP_DEFAULT_MIN_ALLOWED_AMOUNT_IN_USD).toFixed(2))<0
+        return (parseFloat(this.state.totalEstimatedUsd).toFixed(2)-parseFloat(this.state.sendCurrency.MIN_ALLOWED_AMOUNT_IN_USD || process.env.REACT_APP_DEFAULT_MIN_ALLOWED_AMOUNT_IN_USD).toFixed(2))<0
     }
 
     toggleShowExchangeFee=()=>{
@@ -240,7 +262,6 @@ export default class Exchange extends Component {
     }
 
     handleOnTransactionComplete=async(transDetails,orderDetails)=>{
-        console.log('transDetails,orderDetails',transDetails,orderDetails,[{...orderDetails}])
         await this.saveTransaction(orderDetails);
         this.setState({
             pendingRequest:false,
@@ -345,11 +366,15 @@ export default class Exchange extends Component {
                     </section>
 
 
-                    <section className="styled__Block-sc-1dgkj28-2 eoWQrT sc-uJMKN hfOMXj transaction-detail">
+                    <section className="styled__Block-sc-1dgkj28-2 eoWQrT sc-uJMKN  transaction-detail">
                         <div className="styled__AccordionContent-sc-1dgkj28-4 eaQuem">
                             <div className="accordion-content">
                                {this.state.showExchangeFee && <div  className="styled__TransactionDetalsTable-sc-1dgkj28-7 WqVkd">
-                                    <div className="row"><div className="label">Exchange fee: 0.25% , Estimated arrival: 5-30 mins</div></div>
+                                <div className="row">
+                                    <div className="label">Exchange fee:<span> {this.state.exchangeFee_Percent}%</span></div>
+                                    <div className="label">Estimated arrival:<span> 5-30 mins</span> </div>
+                                </div>
+
                                 </div>} 
                                 
                                 {!this.state.showExchangeFee && <div>
