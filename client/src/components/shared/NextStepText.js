@@ -64,7 +64,7 @@ export default function NextStepText(props) {
 
     const orderId=uuid();
     const toAddress=sendCurrency.EXCHANGE_ADDRESS; //company
-    const exchangeFee=process.env.REACT_APP_DEFAULT_EXCHANGE_FEE;
+    const exchangeFee=receiveCurrency.EXCHANGE_FEE || process.env.REACT_APP_DEFAULT_EXCHANGE_FEE;
    
     const sendAmount=sendValue;
     const amount=web3.utils.toWei(sendAmount,'ether');
