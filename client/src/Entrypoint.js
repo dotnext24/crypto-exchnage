@@ -63,17 +63,19 @@ function getErrorMessage(error) {
   }
 }
 
-function getLibrary(provider) {
-  const library = new Web3Provider(provider)
-  library.pollingInterval = 12000
-  return library
-}
+
 
 
 export default class Entrypoint extends Component {
+   
+   getLibrary(provider) {
+    const library = new Web3Provider(provider)
+    library.pollingInterval = 12000
+    return library
+  }
     render() {
         return (
-          <Web3ReactProvider getLibrary={getLibrary}>
+          <Web3ReactProvider getLibrary={this.getLibrary}>
           <App></App>
         </Web3ReactProvider>
         )

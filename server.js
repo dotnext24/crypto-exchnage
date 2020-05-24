@@ -45,6 +45,13 @@ app.get('/api/coin_price/:name/:vs_currency', async (req, res) => {
   res.send(data);
 });
 
+
+app.get('/api/tokens', async (req, res) => {
+  
+  let data =JSON.parse(process.env.REACT_APP_TOKENS);
+  res.send(data);
+});
+
 app.post('/api/world', (req, res) => {
   console.log(req.body);
   res.send(

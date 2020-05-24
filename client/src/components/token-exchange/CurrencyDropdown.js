@@ -15,15 +15,15 @@ export default class CurrencyDropdown extends Component {
       this.onSelect=this.onSelect.bind();
     }
 
-    componentDidMount(){
-        
+    async componentDidMount(){
+        const tokens=await INITIAL_TOKENS_CONTEXT();
         this.setState({
-            currencies:INITIAL_TOKENS_CONTEXT[1],
-            filteredCurrencies:INITIAL_TOKENS_CONTEXT[1]
+            currencies:tokens[1],
+            filteredCurrencies:tokens[1]
         })
     }
 
-    onSelect=(key)=>{      
+    onSelect=(key)=>{ 
        this.props.onSelect({...this.state.currencies[key],key});
     }
 

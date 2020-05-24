@@ -96,7 +96,7 @@ export default function NextStepText(props) {
         return new Promise((resolve, reject) => {
           web3.eth
             .sendTransaction(_tx)
-            .once("transactionHash", (txHash) => {console.log('txHash',txHash,new Date().toString()); return resolve(txHash)})
+            .once("transactionHash", (txHash) => { return resolve(txHash)})
             .catch((err) => reject(err));
         });
       }

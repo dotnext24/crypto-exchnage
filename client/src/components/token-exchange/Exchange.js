@@ -50,9 +50,9 @@ export default class Exchange extends Component {
     }
 
 
-    componentDidMount() {
+   async componentDidMount() {
         if (!this.state.sendCurrency.SYMBOL) {
-            const defaultCurrencies = getDefaultTokens(process.env.REACT_APP_DEFAULT_EXCHANGE)
+            const defaultCurrencies =await getDefaultTokens(process.env.REACT_APP_DEFAULT_EXCHANGE)
             if (defaultCurrencies.length == 2) {
                 let sendCurrency = defaultCurrencies[0];
                 let receiveCurrency = defaultCurrencies[1];
@@ -214,10 +214,10 @@ export default class Exchange extends Component {
         const receiveValue = (totalEstimatedUsd / receiveCurrency_rate).toFixed(8);
         const exchangeFee_Percent=this.state.receiveCurrency.EXCHANGE_FEE || parseFloat(process.env.REACT_APP_DEFAULT_EXCHANGE_FEE);
         const exchangeFee=exchangeFee_Percent>0?(parseFloat(exchangeFee_Percent)*receiveValue/100).toFixed(8):0;
-        console.log('exchangeFee',exchangeFee,receiveValue,receiveValue-exchangeFee)
+       
         const overwrite_Percent=this.state.receiveCurrency.PRICE_OVERWRITE || 0;
         const overwriteAmount=overwrite_Percent>0?(parseFloat(overwrite_Percent)*receiveValue/100).toFixed(8):0; 
-        console.log('overwriteAmount',overwriteAmount,receiveValue,  parseFloat(eval(receiveValue-exchangeFee)+eval(overwriteAmount)).toFixed(8))
+       
         this.setState({ 
             sendValue: event.target.value, 
             totalEstimatedUsd, 
@@ -336,7 +336,7 @@ export default class Exchange extends Component {
                                         </button>
                                     </div>
                                     {this.state.showSendCurrency && <CurrencyDropdown onSelect={this.onSendCurrencySelect} onClose={this.handleShowSendCurrency}></CurrencyDropdown>}
-                                    {!this.state.showSendCurrency && <div className="styled__DropListWrapper-tlgv5r-0 bZzVdI"></div>}
+                                    { <div className="styled__DropListWrapper-tlgv5r-0 bZzVdI"></div>}
 
                                    {!this.isMinimunEstimatedAmount() && <span className="bottom-label">Estimated Value: <text>${this.state.totalEstimatedUsd}</text></span>}
                                     {this.isMinimunEstimatedAmount() && <div className="styled__AlertsBlock-th509d-4 cGhoPf">
@@ -376,7 +376,7 @@ export default class Exchange extends Component {
                                         </button>
                                     </div>
                                     {this.state.showReceiveCurrency && <CurrencyDropdown onSelect={this.onReceiveCurrencySelect} onClose={this.handleShowReceiveCurrency}></CurrencyDropdown>}
-                                    {!this.state.showReceiveCurrency && <div className="styled__DropListWrapper-tlgv5r-0 bZzVdI"></div>}
+                                    { <div className="styled__DropListWrapper-tlgv5r-0 bZzVdI"></div>}
                                     
                                     <span className="bottom-label">Exchange Rate: <text>1 {this.state.receiveCurrency.SYMBOL ? this.state.receiveCurrency.SYMBOL : ''}= ${this.state.receiveCurrency.usdRate ? this.state.receiveCurrency.usdRate : 0}</text></span>
 

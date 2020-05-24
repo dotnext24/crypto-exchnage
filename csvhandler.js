@@ -25,7 +25,7 @@ function writeTransaction(transactionDetail){
    
     csvWriter.writeRecords(transactionDetail)       // returns a promise
     .then(() => {
-        console.log('csv Done',transactionDetail);
+        console.log('csv Done');
     });
 }
 

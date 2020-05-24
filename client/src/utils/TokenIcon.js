@@ -1,8 +1,18 @@
-export const INITIAL_TOKENS_CONTEXT = JSON.parse(process.env.REACT_APP_TOKENS)
 
-  export const getDefaultTokens=(pair)=>{
+
+
+
+export const INITIAL_TOKENS_CONTEXT =async ()=>{
+  JSON.parse(process.env.REACT_APP_TOKENS)
+  const response = await fetch('/api/tokens');
+    const body = await response.json(); 
+    return body;
+}
+
+  export const getDefaultTokens=async(pair)=>{
       let tokensPain= pair.split("/");
-      let allTokens=INITIAL_TOKENS_CONTEXT[1];
+      let tokens=await INITIAL_TOKENS_CONTEXT();     
+      let allTokens=tokens[1];
       const sendTokens=Object.keys(allTokens).filter(x=>allTokens[x].SYMBOL==tokensPain[0]);
       const recieveTokens=Object.keys(allTokens).filter(x=>allTokens[x].SYMBOL==tokensPain[1]);
       if(sendTokens.length>0 && recieveTokens.length>0){
