@@ -7,6 +7,10 @@
 .idEyaG.arrow-down-icon {
     background-image: url(https://changelly.com/_next/static/images/arrow-down-309c4ee22cd5479e63282f90548061a7.svg);
 }
+.bZoPFN {
+    height: 100vh;
+    overflow-y: scroll;
+}
 
 .WqVkd .row {
     padding:0px 20px;
@@ -333,12 +337,13 @@
     width: 96%;
 }
 .bOMLKt input {
+    height: 12px;
     display: inline-block;
     vertical-align: middle;
-    /* width: calc(100% - 2.5rem); */
+    width: calc(100% - 4.5rem);
     margin-left: 0.5rem;
     line-height: 1.43;
-    font-size: 18px;
+    font-size: 12px;
     color: rgb(57, 66, 71);
     padding: 10px 1rem;
     border-width: 0px;

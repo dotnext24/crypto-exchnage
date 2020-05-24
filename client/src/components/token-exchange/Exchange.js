@@ -329,7 +329,7 @@ export default class Exchange extends Component {
 
                                 <div className="currency-block styled__WrapperCurrency-g3y0ua-0 rGnYa send-box" style={{}}>
                                     <span className="currency-block__label styled__CurrencyLabel-g3y0ua-1 biCxOe">You send</span>
-                                    <input style={this.isValid()?{}:{'border-color': 'rgba(255, 176, 0, 0.294)'}} onChange={this.handleSendValueChange} value={this.state.sendValue} maxLength="16" className="currency-block__value styled__CurrencyValue-g3y0ua-2 dtUlLd" />
+                                    <input style={this.isValid()?{}:{'border-color': 'rgba(255, 176, 0, 0.294)'}} onChange={this.handleSendValueChange} value={this.state.sendValue} maxLength="16" className="form-control currency-block__value styled__CurrencyValue-g3y0ua-2 dtUlLd" />
                                     <div className="currency-block__currency styled__CurrencyButtonWrapper-g3y0ua-3 jCKRds">
                                         <button onClick={this.handleShowSendCurrency.bind()} className="currency-block__switch switchable styled__CurrencySwitch-g3y0ua-4 ZmPKt" type="button" id="currency_button_from">
                                             <div className="full-name-label">{this.state.sendCurrency && this.state.sendCurrency.NAME ? this.state.sendCurrency.NAME : "US Dollar"}</div>{this.state.sendCurrency && this.state.sendCurrency.SYMBOL ? this.state.sendCurrency.SYMBOL : "usd"}

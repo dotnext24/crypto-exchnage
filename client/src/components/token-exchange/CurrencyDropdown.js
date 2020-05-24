@@ -65,9 +65,9 @@ export default class CurrencyDropdown extends Component {
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M7.22222 13.4444C10.6587 13.4444 13.4444 10.6587 13.4444 7.22222C13.4444 3.78578 10.6587 1 7.22222 1C3.78578 1 1 3.78578 1 7.22222C1 10.6587 3.78578 13.4444 7.22222 13.4444Z" stroke="#80A3B6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                                 <path d="M15.0005 14.9995L11.6172 11.6162" stroke="#80A3B6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
                         </i>
-                        <input type="text" placeholder="Type a currency or ticker" onChange={this.handleChange} value={this.state.value} />
+                        <input className="form-control" type="text" placeholder="Type a currency or ticker" onChange={this.handleChange} value={this.state.value} />
                     </div>
-                    <button type="button" tabindex="-1" className="sc-chPdSV iEQJel">
+                    <button type="button" tabindex="-1" className="btn sc-chPdSV iEQJel">
                         <i onClick={this.props.onClose} style={{ "display": "inline-block", "vertical-align": "middle" }}>
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M14 2L2 14" stroke="#80A3B6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>

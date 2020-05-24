@@ -1,7 +1,8 @@
 @media screen and (max-width: 1024px)
 {
    .transaction-detail{
-       margin: 0px !important;
+       
+       margin: 1rem auto;
        padding: 0px 20px !important;
       
    }
@@ -39,6 +40,7 @@
         background: white;
         padding: 20px;
         margin-bottom: 40px;
+        max-width: 539px;
     }
     .ioLDbv.ioLDbv.ioLDbv{
         width: 100%;
@@ -469,7 +471,7 @@ button {
 .gywoMT {
     display: block;
     position: absolute;
-    top: 75px;
+    top: 0px;
     left: 0px;
     width: 500px;
     height: 100vh;
