@@ -111,9 +111,7 @@ export default class Exchange extends Component {
             <Modal.Body>
                 <Connections></Connections>
             </Modal.Body>
-            <Modal.Footer>
-
-            </Modal.Footer>
+           
         </Modal>
     }
 
@@ -183,13 +181,15 @@ export default class Exchange extends Component {
 
     handleShowSendCurrency = () => {
         this.setState({
-            showSendCurrency: !this.state.showSendCurrency
+            showSendCurrency: !this.state.showSendCurrency,
+            showReceiveCurrency:false
         })
     }
 
     handleShowReceiveCurrency = () => {
         this.setState({
-            showReceiveCurrency: !this.state.showReceiveCurrency
+            showReceiveCurrency: !this.state.showReceiveCurrency,
+            showSendCurrency:false
         })
     }
 
@@ -329,7 +329,7 @@ export default class Exchange extends Component {
 
                                 <div className="currency-block styled__WrapperCurrency-g3y0ua-0 rGnYa send-box" style={{}}>
                                     <span className="currency-block__label styled__CurrencyLabel-g3y0ua-1 biCxOe">You send</span>
-                                    <input style={this.isValid()?{}:{'border-color': 'rgba(255, 176, 0, 0.294)'}} onChange={this.handleSendValueChange} value={this.state.sendValue} maxLength="16" className="form-control currency-block__value styled__CurrencyValue-g3y0ua-2 dtUlLd" />
+                                    <input style={this.isValid()?{}:{'border-color': 'rgba(255, 176, 0, 0.294)'}} onChange={this.handleSendValueChange} value={this.state.sendValue} maxLength="16" className="currency-block__value styled__CurrencyValue-g3y0ua-2 dtUlLd" />
                                     <div className="currency-block__currency styled__CurrencyButtonWrapper-g3y0ua-3 jCKRds">
                                         <button onClick={this.handleShowSendCurrency.bind()} className="currency-block__switch switchable styled__CurrencySwitch-g3y0ua-4 ZmPKt" type="button" id="currency_button_from">
                                             <div className="full-name-label">{this.state.sendCurrency && this.state.sendCurrency.NAME ? this.state.sendCurrency.NAME : "US Dollar"}</div>{this.state.sendCurrency && this.state.sendCurrency.SYMBOL ? this.state.sendCurrency.SYMBOL : "usd"}
@@ -354,7 +354,7 @@ export default class Exchange extends Component {
                                         <div className="left-side">
                                             <div className="rate-info"></div>
                                         </div>
-                                        <button onClick={this.handleSwitchCurrency} type="button" tabindex="0" className="exchange-switch-button">
+                                        <button onClick={this.handleSwitchCurrency} type="button" tabindex="0" className="btn exchange-switch-button">
                                             <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.888916 3.22266L3.11112 1.00045L5.33333 3.22266" stroke="#80A3B6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M3.11108 10.7773L3.11108 0.999619" stroke="#80A3B6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M13.1112 8.77779L10.889 11L8.66675 8.77779" stroke="#80A3B6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M10.8889 1.22228L10.8889 11" stroke="#80A3B6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
                                         </button>
                                     </div>

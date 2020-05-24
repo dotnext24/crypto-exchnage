@@ -97,7 +97,7 @@ export default function Connections() {
   
 <Card body>
 
-       <a onClick={() => {
+       <a className="btn" onClick={() => {
                 if(name=='Metamask' && !isMetamaskInstalled()){
                   window.open("https://metamask.io/");
                 }
@@ -111,13 +111,13 @@ export default function Connections() {
               }}>
                  {activating && <span>....</span>}
                 {connected && !error && (
-                  <span  style={{marginRight:'5px'}} role="img" aria-label="check">
+                  <span style={{marginRight:'5px'}} role="img" aria-label="check">
                     ✅
                   </span>
                 )}
                  {(name=='Metamask' && !isMetamaskInstalled())?"Install "+name:name}               
-                {name=='WalletConnect' && <img height="24" width="24" src={`./assets/${name}.svg`}/>}
-                {name!='WalletConnect' && <img height="24" width="24" src={`./assets/${name}.png`}/>}
+                {name=='WalletConnect' && <img className="pull-right"  height="24" width="24" src={`./assets/${name}.svg`}/>}
+                {name!='WalletConnect' && <img className="pull-right"  height="24" width="24" src={`./assets/${name}.png`}/>}
               </a>
          
 </Card>

@@ -19,7 +19,7 @@ export default function AccountNumber(props) {
   useInactiveListener()
 
   if (active && account && account.length > 0)
-    return (<a onClick={() => { deactivate(); if (connector.close) connector.close() }}>
+    return (<a className="btn" onClick={() => { deactivate(); if (connector.close) connector.close() }}>
 
       <OverlayTrigger
         placement="left"
@@ -33,6 +33,6 @@ export default function AccountNumber(props) {
       </OverlayTrigger>{' '}
     </a>
     )
-  else return <a onClick={() => { props.action() }}>Connect Wallet</a>;
+  else return <a className="btn" onClick={() => { props.action() }}>Connect Wallet</a>;
 
 }

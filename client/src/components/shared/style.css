@@ -17,8 +17,12 @@
 .modal-title {
     color: rgb(85, 127, 150);
 }
-
+.card-body{
+    padding: .5rem;
+}
 .wallets .card a{
+    width: 90%;
+    text-align: left;
     font-size: 14px;
     font-weight: 600;
     color: rgb(85, 127, 150);
