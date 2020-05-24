@@ -316,12 +316,15 @@ export default class Exchange extends Component {
         return (
             <React.Fragment>
                
-               { this.state.currentStep==1 && <div className="styled__PageWrapper-sc-1dgkj28-0 kGkjno">
-                    <section className="connect-wallet" >
+               { this.state.currentStep==1 && <div className="styled__PageWrapper-sc-1dgkj28-0 kGkjno container">
+                    
+                  
+                    <div className="col-md connect-wallet" >
                         <Account action={this.handleShowConnectWalletPopup}></Account>
 
-                    </section>
-                    <section className="styled__Block-sc-1dgkj28-2 ioLDbv sc-uJMKN hfOMXj exchnage-container" >
+                    </div>
+                
+                    <div  className="col-md styled__Block-sc-1dgkj28-2 ioLDbv sc-uJMKN hfOMXj exchnage-container" >
 
                         <div className="styled__CalculatorWrapper-sc-1dgkj28-3 KHQcz">
                             <span className="wallet-balance"><Balance></Balance></span>
@@ -386,10 +389,10 @@ export default class Exchange extends Component {
                         </div>
 
 
-                    </section>
+                    </div>
 
 
-                    <section className="styled__Block-sc-1dgkj28-2 eoWQrT sc-uJMKN  transaction-detail">
+                    <div className="col-md styled__Block-sc-1dgkj28-2 eoWQrT sc-uJMKN  transaction-detail">
                         <div className="styled__AccordionContent-sc-1dgkj28-4 eaQuem">
                             <div className="accordion-content">
                                {this.state.showExchangeFee && <div  className="styled__TransactionDetalsTable-sc-1dgkj28-7 WqVkd">
@@ -412,10 +415,10 @@ export default class Exchange extends Component {
                                 <span className="arrow-down-icon styled__SvgIcon-sc-1dgkj28-5 idEyaG" width="1rem" height="0.6rem"></span>
                             </div>
                         </div>
-                    </section>
+                    </div>
 
 
-                    <section className="styled__Block-sc-1dgkj28-2 ioLDbv sc-uJMKN hfOMXj">
+                    <div className="col-md styled__Block-sc-1dgkj28-2 ioLDbv sc-uJMKN hfOMXj">
                         <NextStepText 
                          sendCurrency={this.state.sendCurrency}
                          receiveCurrency={this.state.receiveCurrency}
@@ -428,7 +431,7 @@ export default class Exchange extends Component {
                          OnTransactionComplete={this.handleOnTransactionComplete}
                          OnTransactionFail={this.handleOnTransactionFail}
                          ></NextStepText>
-                    </section>
+                    </div>
                 </div>
                 }
 
