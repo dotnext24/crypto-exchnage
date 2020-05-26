@@ -29,7 +29,7 @@
 }
 
 .modal-backdrop.show {
-    opacity: 0.1;
+    /* opacity: 0.1; */
 }
 
 @media (min-width: 576px)

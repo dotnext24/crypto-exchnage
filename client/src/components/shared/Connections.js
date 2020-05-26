@@ -109,7 +109,7 @@ export default function Connections() {
                 activate(connectorsByName[name])
                 }
               }}>
-                 {activating && <span>....</span>}
+                 {activating && <span></span>}
                 {connected && !error && (
                   <span style={{marginRight:'5px'}} role="img" aria-label="check">
                     ✅
