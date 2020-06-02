@@ -95,6 +95,10 @@
         height: 64px;
         position: absolute;
     }
+   
+    .ZmPKt:hover{
+        color: rgb(85, 127, 150);
+    }
     .ZmPKt {
         position: relative;
         width: 108px;
@@ -201,6 +205,9 @@
 
 @media (min-width: 1024px)
 {
+    .ZmPKt:hover{
+        color: rgb(85, 127, 150);
+    }
 
     .bZoPFN {
         height: auto;

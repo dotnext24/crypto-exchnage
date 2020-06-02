@@ -9,6 +9,7 @@ import Balance from '../shared/Balance';
 import { getDefaultTokens } from './../../utils/TokenIcon'
 import OrderDetails from './OrderDetails';
 import NextStepText from '../shared/NextStepText';
+import { trezor } from '../../connectors';
 
 export default class Exchange extends Component {
     constructor(props) {
@@ -33,7 +34,8 @@ export default class Exchange extends Component {
             exchangeFee_Percent:parseFloat(process.env.REACT_APP_DEFAULT_EXCHANGE_FEE),
             exchangeFee:0,
             overwrite_Percent:0,
-            overwriteAmount:0
+            overwriteAmount:0,
+            showMinWarning:true
         }
         this.handleSwitchCurrency = this.handleSwitchCurrency.bind(this);
         this.onSendCurrencySelect = this.onSendCurrencySelect.bind(this);
@@ -81,6 +83,7 @@ export default class Exchange extends Component {
                             sendValue:minimunSendAmount,
                             receiveValue: parseFloat(eval(minimunRecieveAmount-exchangeFee)+eval(overwriteAmount)).toFixed(8),
                             totalEstimatedUsd:totalEstimatedUsd,
+                            showMinWarning:true,
                             minimumSendToken:minimunSendAmount,
                             exchangeFee_Percent,
                             exchangeFee,
@@ -136,6 +139,7 @@ export default class Exchange extends Component {
                 this.setState({
                     sendCurrency: { ...currency, usdRate: rate },
                     totalEstimatedUsd: totalEstimatedUsd,
+                    showMinWarning:true,
                     receiveValue:parseFloat(eval(receiveValue-exchangeFee)+eval(overwriteAmount)).toFixed(8),
                     minimumSendToken:minimunSendAmount,
                     exchangeFee_Percent,
@@ -270,6 +274,7 @@ export default class Exchange extends Component {
     }
 
     toggleShowExchangeFee=()=>{
+
         this.setState({
             showExchangeFee:!this.state.showExchangeFee
         })
@@ -341,10 +346,10 @@ export default class Exchange extends Component {
                                     {this.state.showSendCurrency && <CurrencyDropdown onSelect={this.onSendCurrencySelect} onClose={this.handleShowSendCurrency}></CurrencyDropdown>}
                                     { <div className="styled__DropListWrapper-tlgv5r-0 bZzVdI"></div>}
 
-                                   {!this.isMinimunEstimatedAmount() && <span className="bottom-label">Estimated Value: <text>${this.state.totalEstimatedUsd}</text></span>}
-                                    {this.isMinimunEstimatedAmount() && <div className="styled__AlertsBlock-th509d-4 cGhoPf">
-                                        <div type="yellow" className="styled__Alert-bkwpwx-0 hEMJGK">Minimum amount: {this.state.minimumSendToken} {this.state.sendCurrency.SYMBOL}<div className="styled__ButtonWrapper-bkwpwx-1 cPyZOh">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="white" fill-rule="evenodd" d="M12.961 11.999l6.722 6.723a.678.678 0 1 1-.961.958L12 12.96 5.278 19.68a.68.68 0 0 1-.96 0 .678.678 0 0 1 0-.958l6.72-6.723-6.72-6.722a.68.68 0 1 1 .96-.96L12 11.04l6.722-6.722a.68.68 0 1 1 .961.96L12.96 12z"></path></svg>
+                                    {!this.isMinimunEstimatedAmount() && <span className="bottom-label">Estimated Value: <text>${this.state.totalEstimatedUsd}</text></span>}
+                                    {this.isMinimunEstimatedAmount() && this.state.showMinWarning==true && <div className="styled__AlertsBlock-th509d-4 cGhoPf">
+                                             <div type="yellow" className="styled__Alert-bkwpwx-0 hEMJGK"> Minimum amount: {this.state.minimumSendToken} {this.state.sendCurrency.SYMBOL}<div className="styled__ButtonWrapper-bkwpwx-1 cPyZOh">
+                                               <svg style={{cursor:'pointer'}} onClick={()=>{this.setState({showMinWarning:false})}} xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="white" fill-rule="evenodd" d="M12.961 11.999l6.722 6.723a.678.678 0 1 1-.961.958L12 12.96 5.278 19.68a.68.68 0 0 1-.96 0 .678.678 0 0 1 0-.958l6.72-6.723-6.72-6.722a.68.68 0 1 1 .96-.96L12 11.04l6.722-6.722a.68.68 0 1 1 .961.96L12.96 12z"></path></svg>
                                             </div>
                                         </div>
                                     </div>
@@ -412,7 +417,7 @@ export default class Exchange extends Component {
                             </div>
                             <div onClick={this.toggleShowExchangeFee.bind(this)} className="accordion-toggle-button">
                                 {/* <span className="arrow-down-icon styled__SvgIcon-sc-1dgkj28-5 idEyaG" width="1rem" height="0.6rem"></span> */}
-                                <span className="arrow-down-icon styled__SvgIcon-sc-1dgkj28-5 idEyaG" width="1rem" height="0.6rem"></span>
+                                <span className={this.state.showExchangeFee?"arrow-up-icon styled__SvgIcon-sc-1dgkj28-5 idEyaG": "arrow-down-icon styled__SvgIcon-sc-1dgkj28-5 idEyaG"} width="1rem" height="0.6rem"></span>
                             </div>
                         </div>
                     </div>

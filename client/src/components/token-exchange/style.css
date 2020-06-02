@@ -1,11 +1,12 @@
 .exchnage-container input{
   font-size: 20px !important;
   height: 0px;
-  margin-top: 5px;
+ 
 }
 
 .idEyaG.arrow-down-icon {
-    background-image: url(https://changelly.com/_next/static/images/arrow-down-309c4ee22cd5479e63282f90548061a7.svg);
+    background-size: 12px 12px;
+    background-image: url("/assets/down-arrow.png");
 }
 .bZoPFN {
     height: 100vh;
@@ -64,7 +65,13 @@
 }
 
 .idEyaG.arrow-down-icon {
-    background-image: url(https://changelly.com/_next/static/images/arrow-down-309c4ee22cd5479e63282f90548061a7.svg);
+    background-size: 12px 12px;
+    background-image: url("/assets/down-arrow.png");
+}
+
+.idEyaG.arrow-up-icon {
+    background-size: 12px 12px;
+    background-image: url("/assets/up-arrow.png");
 }
 
 .cGhoPf {
@@ -441,6 +448,9 @@
 }
 
 
+.bZzVdI .cl-droplist li:hover{
+    background-color: #F2F6F8;
+}
 .bZzVdI .cl-droplist li {
     color: rgb(85, 127, 150);
 }
