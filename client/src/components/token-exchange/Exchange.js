@@ -49,6 +49,7 @@ export default class Exchange extends Component {
         this.handleOnTransactionComplete=this.handleOnTransactionComplete.bind(this)
         this.handleOnInitTransaction=this.handleOnInitTransaction.bind(this)
         this.handleOnTransactionFail=this.handleOnTransactionFail.bind(this)
+        this.handleClickOutside = this.handleClickOutside.bind(this);
     }
 
 
@@ -97,6 +98,8 @@ export default class Exchange extends Component {
             }
 
         }
+
+        document.addEventListener('mousedown', this.handleClickOutside);
     }
 
     handleShowConnectWalletPopup = () => {
@@ -107,7 +110,7 @@ export default class Exchange extends Component {
     }
 
     renderWalletModel(handleShowConnectWalletPopup) {
-        return <Modal dialogClassName="modal-wallet" centered={true} show={this.state.showConnectWalletPopup} onHide={handleShowConnectWalletPopup}>
+        return <Modal  dialogClassName="modal-wallet" centered={true} show={this.state.showConnectWalletPopup} onHide={handleShowConnectWalletPopup}>
             <Modal.Header closeButton>
                 <Modal.Title>Connect to a wallet</Modal.Title>
             </Modal.Header>
@@ -117,6 +120,19 @@ export default class Exchange extends Component {
            
         </Modal>
     }
+
+      componentWillUnmount() {
+        document.removeEventListener('mousedown', this.handleClickOutside);
+      }
+
+      handleClickOutside(event) {
+        
+        this.setState({
+            showSendCurrency: false,
+            showReceiveCurrency:false
+        })
+        
+      }
 
     onSendCurrencySelect(currency) {
         this.setState({
@@ -339,11 +355,11 @@ export default class Exchange extends Component {
                                     <span className="currency-block__label styled__CurrencyLabel-g3y0ua-1 biCxOe">You send</span>
                                     <input style={this.isValid()?{}:{'border-color': 'rgba(255, 176, 0, 0.294)'}} onChange={this.handleSendValueChange} value={this.state.sendValue} maxLength="16" className="currency-block__value styled__CurrencyValue-g3y0ua-2 dtUlLd" />
                                     <div className="currency-block__currency styled__CurrencyButtonWrapper-g3y0ua-3 jCKRds">
-                                        <button onClick={this.handleShowSendCurrency.bind()} className="btn currency-block__switch switchable styled__CurrencySwitch-g3y0ua-4 ZmPKt" type="button" id="currency_button_from">
+                                        <button onClick={this.handleShowSendCurrency.bind()} className="currency-block__switch switchable styled__CurrencySwitch-g3y0ua-4 ZmPKt" type="button" id="currency_button_from">
                                             <div className="full-name-label">{this.state.sendCurrency && this.state.sendCurrency.NAME ? this.state.sendCurrency.NAME : "US Dollar"}</div>{this.state.sendCurrency && this.state.sendCurrency.SYMBOL ? this.state.sendCurrency.SYMBOL : "usd"}
                                         </button>
                                     </div>
-                                    {this.state.showSendCurrency && <CurrencyDropdown onSelect={this.onSendCurrencySelect} onClose={this.handleShowSendCurrency}></CurrencyDropdown>}
+                                    {this.state.showSendCurrency && <CurrencyDropdown skip={this.state.receiveCurrency} onSelect={this.onSendCurrencySelect} onClose={this.handleShowSendCurrency}></CurrencyDropdown>}
                                     { <div className="styled__DropListWrapper-tlgv5r-0 bZzVdI"></div>}
 
                                     {!this.isMinimunEstimatedAmount() && <span className="bottom-label">Estimated Value: <text>${this.state.totalEstimatedUsd}</text></span>}
@@ -378,12 +394,12 @@ export default class Exchange extends Component {
                                     <span className="currency-block__label styled__CurrencyLabel-g3y0ua-1 biCxOe">You get approximately</span>
                                     <input disabled="" value={this.state.receiveValue} maxLength="16" className="currency-block__value styled__CurrencyValue-g3y0ua-2 dtUlLd" />
                                     <div className="currency-block__currency styled__CurrencyButtonWrapper-g3y0ua-3 jCKRds">
-                                        <button onClick={this.handleShowReceiveCurrency} className="btn currency-block__switch switchable styled__CurrencySwitch-g3y0ua-4 ZmPKt" type="button" id="currency_button_to">
+                                        <button onClick={this.handleShowReceiveCurrency} className="currency-block__switch switchable styled__CurrencySwitch-g3y0ua-4 ZmPKt" type="button" id="currency_button_to">
 
                                             <div className="full-name-label">{this.state.receiveCurrency && this.state.receiveCurrency.NAME ? this.state.receiveCurrency.NAME : "Ethereum"}</div>{this.state.receiveCurrency && this.state.receiveCurrency.SYMBOL ? this.state.receiveCurrency.SYMBOL : "eth"}
                                         </button>
                                     </div>
-                                    {this.state.showReceiveCurrency && <CurrencyDropdown onSelect={this.onReceiveCurrencySelect} onClose={this.handleShowReceiveCurrency}></CurrencyDropdown>}
+                                    {this.state.showReceiveCurrency && <CurrencyDropdown skip={this.state.sendCurrency} onSelect={this.onReceiveCurrencySelect} onClose={this.handleShowReceiveCurrency}></CurrencyDropdown>}
                                     { <div className="styled__DropListWrapper-tlgv5r-0 bZzVdI"></div>}
                                     
                                     <span className="bottom-label">Exchange Rate: <text>1 {this.state.receiveCurrency.SYMBOL ? this.state.receiveCurrency.SYMBOL : ''}= ${this.state.receiveCurrency.usdRate ? this.state.receiveCurrency.usdRate : 0}</text></span>

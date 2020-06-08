@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { OverlayTrigger, Tooltip, Dropdown, Button } from 'react-bootstrap'
 import { useWeb3React } from '@web3-react/core'
 import { useEagerConnect, useInactiveListener } from '../../hooks'
 
@@ -19,20 +19,21 @@ export default function AccountNumber(props) {
   useInactiveListener()
 
   if (active && account && account.length > 0)
-    return (<a className="btn" onClick={() => { deactivate(); if (connector.close) connector.close() }}>
+    return (<a>
 
-      <OverlayTrigger
-        placement="left"
-        overlay={
-          <Tooltip id={`tooltip-account`}>
-            <span>{account}</span>
-          </Tooltip>
-        }
-      >
-        <span>{account.substr(0, 10)}</span>
-      </OverlayTrigger>{' '}
+<Dropdown>
+  <Dropdown.Toggle  variant="secondary">
+  <span>{`${account.substr(0, 6)}...${account.slice(account.length - 5)}`} </span>
+  </Dropdown.Toggle>
+
+  <Dropdown.Menu>
+    <Dropdown.Item className="btn-disconnect" onClick={() => {deactivate(); if (connector.close) connector.close() }} >Disconnect</Dropdown.Item>
+    
+  </Dropdown.Menu>
+</Dropdown>
+    
     </a>
     )
-  else return <a className="btn" onClick={() => { props.action() }}>Connect Wallet</a>;
+  else return  <a  onClick={() => { props.action() }}> <Button variant="secondary">Connect Wallet</Button> </a>;
 
 }

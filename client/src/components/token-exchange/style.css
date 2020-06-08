@@ -610,6 +610,17 @@
 
 .connect-wallet a{
     float: right;
+   
+}
+
+.btn-disconnect{
+    width: 90% !important;
+    padding: unset !important;
+
+}
+
+.connect-wallet .connect-button{
+    float: right;
     padding: 10px 20px;
     background: white;
     transition: box-shadow 0.25s ease 0s;

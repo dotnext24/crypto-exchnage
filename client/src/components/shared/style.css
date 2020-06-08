@@ -39,3 +39,8 @@
     max-width: 600px;
 }
 }
+
+
+.wallets .card:hover{
+    border-color: rgb(92, 162, 255);
+}
