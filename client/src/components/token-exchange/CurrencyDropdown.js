@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import {INITIAL_TOKENS_CONTEXT,TokenLogo} from '../../utils/TokenIcon'
+import { json } from 'body-parser'
+import TokenBalance from '../shared/TokenBalance'
 
 export default class CurrencyDropdown extends Component {   
 
@@ -17,7 +19,13 @@ export default class CurrencyDropdown extends Component {
 
     async componentDidMount(){
         if(this.state.currencies==""){
-        const tokens=await INITIAL_TOKENS_CONTEXT();
+            let tokens="";          
+        if(sessionStorage.getItem('tokens')==null || sessionStorage.getItem('tokens')==undefined || sessionStorage.getItem('tokens')==""){
+         tokens=await INITIAL_TOKENS_CONTEXT();         
+         sessionStorage.setItem('tokens',JSON.stringify(tokens))
+        }else{
+            tokens=JSON.parse(sessionStorage.getItem('tokens'));
+        }
         this.setState({
             currencies:tokens[1],
             filteredCurrencies:tokens[1]
@@ -40,10 +48,8 @@ export default class CurrencyDropdown extends Component {
             const currency=this.state.currencies[key];
             let SYMBOL=currency.SYMBOL.toLowerCase();
             let NAME=currency.NAME.toLowerCase();
-
             let IsSymbol = SYMBOL.toLowerCase().includes(valuetoLowerCase);
-            let IsName = NAME.toLowerCase().includes(valuetoLowerCase);
-          
+            let IsName = NAME.toLowerCase().includes(valuetoLowerCase);          
             if(IsSymbol==true || IsName==true)
             currencies[key]=currency;
         })
@@ -59,6 +65,7 @@ export default class CurrencyDropdown extends Component {
         if(!currencies)
         return "";
         
+        console.log('currencies',currencies)
         
         return (
             <div className="styled__DropListWrapper-tlgv5r-0 bZzVdI">
