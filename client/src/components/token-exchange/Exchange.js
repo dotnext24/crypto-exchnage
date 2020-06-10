@@ -99,7 +99,7 @@ export default class Exchange extends Component {
 
         }
 
-        document.addEventListener('mousedown', this.handleClickOutside);
+        //document.addEventListener('mousedown', this.handleClickOutside);
     }
 
     handleShowConnectWalletPopup = () => {
@@ -110,7 +110,7 @@ export default class Exchange extends Component {
     }
 
     renderWalletModel(handleShowConnectWalletPopup) {
-        return <Modal  dialogClassName="modal-wallet" centered={true} show={this.state.showConnectWalletPopup} onHide={handleShowConnectWalletPopup}>
+        return <Modal  dialogClassName="modal-wallet"  centered={true} show={this.state.showConnectWalletPopup} onHide={handleShowConnectWalletPopup}>
             <Modal.Header closeButton>
                 <Modal.Title>Connect to a wallet</Modal.Title>
             </Modal.Header>
@@ -332,6 +332,11 @@ export default class Exchange extends Component {
 
     }
 
+    onBalanceClick(amount){
+       
+        this.handleSendValueChange({target:{value:amount}});
+    }
+
     render() {
 
         return (
@@ -339,7 +344,7 @@ export default class Exchange extends Component {
                
                { this.state.currentStep==1 && <div className="styled__PageWrapper-sc-1dgkj28-0 kGkjno container">
                     
-                  
+               { (this.state.showSendCurrency || this.state.showReceiveCurrency)&& <div onClick={this.handleClickOutside} class="background"></div>}
                     <div className="col-md connect-wallet" >
                         <Account action={this.handleShowConnectWalletPopup}></Account>
 
@@ -348,7 +353,7 @@ export default class Exchange extends Component {
                     <div  className="col-md styled__Block-sc-1dgkj28-2 ioLDbv sc-uJMKN hfOMXj exchnage-container" >
 
                         <div className="styled__CalculatorWrapper-sc-1dgkj28-3 KHQcz">
-                            <span className="wallet-balance"><Balance></Balance></span>
+                            <span className="wallet-balance"><Balance onBalanceClick={this.onBalanceClick.bind(this)}></Balance></span>
                             <div className="exchange-block is-processing styled__ExchangeBlock-th509d-0 fzipjT">
 
                                 <div className="currency-block styled__WrapperCurrency-g3y0ua-0 rGnYa send-box" style={{}}>

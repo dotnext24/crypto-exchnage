@@ -31,6 +31,20 @@
 .modal-backdrop.show {
     /* opacity: 0.1; */
 }
+.background{
+    position: fixed;
+    top: 0;
+    left: 0;
+    /* z-index: 1040; */
+    width: 100vw;
+    height: 100vh;
+
+}
+
+.bZoPFN{
+    overflow-x: hidden;
+   
+}
 
 @media (min-width: 576px)
 {

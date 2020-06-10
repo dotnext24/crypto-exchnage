@@ -34,6 +34,7 @@ export function useInactiveListener(suppress = false) {
   const { active, error, activate } = useWeb3React()
 
   useEffect(() => {
+   
     const { ethereum } = window 
     if (ethereum && ethereum.on && !active && !error && !suppress) {
       const handleConnect = () => {
@@ -70,4 +71,27 @@ export function useInactiveListener(suppress = false) {
       }
     }
   }, [active, error, suppress, activate])
+}
+
+
+
+
+export function useAutoConnect(suppress = false) {
+  const { active, error, activate } = useWeb3React();
+  useEffect(() => {   
+    const { ethereum } = window 
+    if (ethereum && ethereum.on && !active && !error && !suppress) {
+      const handleConnect = () => {
+        console.log("Handling 'connect' event")
+        activate(injected)
+      }
+      if(sessionStorage.getItem('connection')!='0x1'){
+        handleConnect();
+        sessionStorage.setItem('connection','0x0');
+        }
+     
+      return () => {       
+      }
+    }
+  }, [])
 }

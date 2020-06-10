@@ -11,50 +11,26 @@ import './App.css';
 import About from './components/token-exchange/About';
 import Header from './components/shared/Header';
 import Exchange from './components/token-exchange/Exchange';
+import { useWeb3React } from '@web3-react/core'
+import {useAutoConnect } from './hooks'
 
-class App extends Component {
-  state = {
-    response: '',
-    post: '',
-    responseToPost: '',
-  };
+function App()  {
+  
+  const context = useWeb3React()
+  const { connector, library, chainId, account, activate, deactivate, active, error } = context
 
-  componentDidMount() {
-    this.callApi()
-      .then(res =>{})
-      .catch(err => {});
-      this.handleSubmit();
-  }
+  // handle logic to recognize the connector currently being activated
+  const [activatingConnector, setActivatingConnector] = React.useState()
+  React.useEffect(() => {
+    if (activatingConnector && activatingConnector === connector) {
+      setActivatingConnector(undefined)
+    }
+  }, [activatingConnector, connector])
 
-  callApi = async () => {
-    const response = await fetch('/api/token_price/ancsddd/usd');
-    const body = await response.json();
+  useAutoConnect();
 
-    if (response.status !== 200) throw Error(body.message);
-
-    return body;
-  };
-
-  handleSubmit = async () => {
-    const records = [
-      {name: 'Bob',  lang: 'French, English'},
-      {name: 'Mary', lang: 'English'}
-  ];
-   
-    const response = await fetch('/api/transaction', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ post: records }),
-    });
-    const body = await response.text();
-
-    this.setState({ responseToPost: body });
-  };
-
-  render() {
-    
+  
+  
     return <div>
        <Router>
            
@@ -73,7 +49,7 @@ class App extends Component {
     </Router>
   
     </div>
-  }
+  
 }
 
 export default App;

@@ -107,6 +107,9 @@ export default function Connections() {
                 setActivatingConnector(currentConnector)
                 
                 activate(connectorsByName[name])
+                
+                sessionStorage.setItem('connection','0x0');
+
                 }
               }}>
                  {activating && <span></span>}
