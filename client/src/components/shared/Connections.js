@@ -28,7 +28,7 @@ import {
       return true 
     }
   }
-export default function Connections() {
+export default function Connections(props) {
 
     const context = useWeb3React()
   const { connector, library, chainId, account, activate, deactivate, active, error } = context
@@ -109,6 +109,9 @@ export default function Connections() {
                 activate(connectorsByName[name])
                 
                 sessionStorage.setItem('connection','0x0');
+                setTimeout(()=>{
+                  props.connectCallback();
+                },1000)
 
                 }
               }}>

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import {INITIAL_TOKENS_CONTEXT,TokenLogo} from '../../utils/TokenIcon'
-import { json } from 'body-parser'
 import TokenBalance from '../shared/TokenBalance'
 
 export default class CurrencyDropdown extends Component {   
@@ -26,6 +25,9 @@ export default class CurrencyDropdown extends Component {
         }else{
             tokens=JSON.parse(sessionStorage.getItem('tokens'));
         }
+
+
+
         this.setState({
             currencies:tokens[1],
             filteredCurrencies:tokens[1]
@@ -62,10 +64,9 @@ export default class CurrencyDropdown extends Component {
     render() {
        
         let currencies=this.state.filteredCurrencies;
-        if(!currencies)
+        if(!currencies )
         return "";
-        
-        console.log('currencies',currencies)
+      
         
         return (
             <div className="styled__DropListWrapper-tlgv5r-0 bZzVdI">
@@ -91,9 +92,13 @@ export default class CurrencyDropdown extends Component {
                 <ul className="sc-htpNat sc-fjdhpX bZoPFN">
                 
                     {Object.keys(currencies).map(key=>{
+                        const assets=this.props.assets;
+                        
                         const currency=currencies[key];
+                        const tokenBalance=assets.filter(x=>x.symbol==currency.SYMBOL).length>0?assets.filter(x=>x.symbol==currency.SYMBOL)[0].balance:"0";
+
                         if(this.props.skip && this.props.skip.SYMBOL && currency.SYMBOL!=this.props.skip.SYMBOL)                        
-                    return(<li onClick={()=>this.onSelect(key)} className="sc-ifAKCX sc-cSHVUG ZfCCL"><button className="sc-kAzzGY cCVEey" type="button" tabindex="0"><div className="coin-list-item"><div className="coin-info"><i className="coin-icon"><img height="24" width="24" src={`./assets/tokens/${key}.png`}/></i><span className="coin-name" style={{fontWeight:'normal'}}><span className="coin-ticker" style={{fontWeight:'bolder',fontSize:'15px'}}>{currency.SYMBOL}</span>{currency.NAME}</span></div><div className="icons"><span className="fixed-rate-status">-</span></div></div></button></li>)
+                    return(<li onClick={()=>this.onSelect(key)} className="sc-ifAKCX sc-cSHVUG ZfCCL"><button className="sc-kAzzGY cCVEey" type="button" tabindex="0"><div className="coin-list-item"><div className="coin-info"><i className="coin-icon"><img height="24" width="24" src={`./assets/tokens/${key}.png`}/></i><span className="coin-name" style={{fontWeight:'normal'}}><span className="coin-ticker" style={{fontWeight:'bolder',fontSize:'15px'}}>{currency.SYMBOL}</span>{currency.NAME}</span></div><div className="icons"><span className="fixed-rate-status"><TokenBalance tokenBalance={tokenBalance} /></span></div></div></button></li>)
                     })}
                     
                 </ul>

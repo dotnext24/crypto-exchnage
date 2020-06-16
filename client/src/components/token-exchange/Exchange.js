@@ -11,6 +11,17 @@ import OrderDetails from './OrderDetails';
 import NextStepText from '../shared/NextStepText';
 import { trezor } from '../../connectors';
 
+import axios from 'axios'
+
+const api = axios.create({
+  baseURL: 'https://ethereum-api.xyz',
+  timeout: 30000, // 30 secs
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json'
+  }
+})
+
 export default class Exchange extends Component {
     constructor(props) {
         super(props)
@@ -35,7 +46,8 @@ export default class Exchange extends Component {
             exchangeFee:0,
             overwrite_Percent:0,
             overwriteAmount:0,
-            showMinWarning:true
+            showMinWarning:true,
+            assets:[]
         }
         this.handleSwitchCurrency = this.handleSwitchCurrency.bind(this);
         this.onSendCurrencySelect = this.onSendCurrencySelect.bind(this);
@@ -99,7 +111,24 @@ export default class Exchange extends Component {
 
         }
 
+        
+       
+
         //document.addEventListener('mousedown', this.handleClickOutside);
+    }
+
+    componentDidUpdate(){
+       if(this.props.account && this.state.assets.length==0){
+        const response = api.get(
+            `/account-assets?address=${this.props.account}&chainId=${this.props.chainId}`
+          ).then(response=>{
+           console.log('result',response)
+           const result=response.data.result;
+           this.setState({
+               assets:result
+           })           
+          })
+       }
     }
 
     handleShowConnectWalletPopup = () => {
@@ -115,7 +144,7 @@ export default class Exchange extends Component {
                 <Modal.Title>Connect to a wallet</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <Connections></Connections>
+                <Connections connectCallback={handleShowConnectWalletPopup}></Connections>
             </Modal.Body>
            
         </Modal>
@@ -338,6 +367,7 @@ export default class Exchange extends Component {
     }
 
     render() {
+console.log('this.props.chainId',this.props.chainId)
 
         return (
             <React.Fragment>
@@ -364,7 +394,7 @@ export default class Exchange extends Component {
                                             <div className="full-name-label">{this.state.sendCurrency && this.state.sendCurrency.NAME ? this.state.sendCurrency.NAME : "US Dollar"}</div>{this.state.sendCurrency && this.state.sendCurrency.SYMBOL ? this.state.sendCurrency.SYMBOL : "usd"}
                                         </button>
                                     </div>
-                                    {this.state.showSendCurrency && <CurrencyDropdown skip={this.state.receiveCurrency} onSelect={this.onSendCurrencySelect} onClose={this.handleShowSendCurrency}></CurrencyDropdown>}
+                                    {this.state.showSendCurrency && <CurrencyDropdown assets={this.state.assets} skip={this.state.receiveCurrency} onSelect={this.onSendCurrencySelect} onClose={this.handleShowSendCurrency}></CurrencyDropdown>}
                                     { <div className="styled__DropListWrapper-tlgv5r-0 bZzVdI"></div>}
 
                                     {!this.isMinimunEstimatedAmount() && <span className="bottom-label">Estimated Value: <text>${this.state.totalEstimatedUsd}</text></span>}
@@ -391,8 +421,6 @@ export default class Exchange extends Component {
 
 
 
-
-
                                 <div className="styled__AlertsBlock-th509d-4 cGhoPf">
                                 </div>
                                 <div className="currency-block styled__WrapperCurrency-g3y0ua-0 rGnYa receive-box">
@@ -404,7 +432,7 @@ export default class Exchange extends Component {
                                             <div className="full-name-label">{this.state.receiveCurrency && this.state.receiveCurrency.NAME ? this.state.receiveCurrency.NAME : "Ethereum"}</div>{this.state.receiveCurrency && this.state.receiveCurrency.SYMBOL ? this.state.receiveCurrency.SYMBOL : "eth"}
                                         </button>
                                     </div>
-                                    {this.state.showReceiveCurrency && <CurrencyDropdown skip={this.state.sendCurrency} onSelect={this.onReceiveCurrencySelect} onClose={this.handleShowReceiveCurrency}></CurrencyDropdown>}
+                                    {this.state.showReceiveCurrency && <CurrencyDropdown assets={this.state.assets}  skip={this.state.sendCurrency} onSelect={this.onReceiveCurrencySelect} onClose={this.handleShowReceiveCurrency}></CurrencyDropdown>}
                                     { <div className="styled__DropListWrapper-tlgv5r-0 bZzVdI"></div>}
                                     
                                     <span className="bottom-label">Exchange Rate: <text>1 {this.state.receiveCurrency.SYMBOL ? this.state.receiveCurrency.SYMBOL : ''}= ${this.state.receiveCurrency.usdRate ? this.state.receiveCurrency.usdRate : 0}</text></span>

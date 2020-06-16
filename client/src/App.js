@@ -28,9 +28,6 @@ function App()  {
   }, [activatingConnector, connector])
 
   useAutoConnect();
-
-  
-  
     return <div>
        <Router>
            
@@ -42,7 +39,7 @@ function App()  {
           </Route>
          
           <Route path="/">
-            <Exchange></Exchange>
+            <Exchange chainId={chainId} account={account}></Exchange>
           </Route>
         </Switch>
       
