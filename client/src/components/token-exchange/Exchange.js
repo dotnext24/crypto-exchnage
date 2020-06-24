@@ -12,6 +12,7 @@ import NextStepText from '../shared/NextStepText';
 import { trezor } from '../../connectors';
 
 import axios from 'axios'
+import TokenBalance from '../shared/TokenBalance';
 
 const api = axios.create({
   baseURL: 'https://ethereum-api.xyz',
@@ -274,7 +275,8 @@ export default class Exchange extends Component {
             exchangeFee_Percent,
             exchangeFee,
             overwrite_Percent,
-            overwriteAmount 
+            overwriteAmount,
+            showMinWarning:true
         });
 
     }
@@ -367,7 +369,7 @@ export default class Exchange extends Component {
     }
 
     render() {
-console.log('this.props.chainId',this.props.chainId)
+        const tokenBalance=this.state.assets.filter(x=>x.symbol==this.state.showSendCurrency.SYMBOL).length>0?this.state.assets.filter(x=>x.symbol==this.state.showSendCurrency.SYMBOL)[0].balance:"0";
 
         return (
             <React.Fragment>
@@ -383,7 +385,12 @@ console.log('this.props.chainId',this.props.chainId)
                     <div  className="col-md styled__Block-sc-1dgkj28-2 ioLDbv sc-uJMKN hfOMXj exchnage-container" >
 
                         <div className="styled__CalculatorWrapper-sc-1dgkj28-3 KHQcz">
-                            <span className="wallet-balance"><Balance onBalanceClick={this.onBalanceClick.bind(this)}></Balance></span>
+                            <span className="wallet-balance">
+                                                            
+                                {this.state.sendCurrency && this.state.sendCurrency.SYMBOL=="ETH" && <Balance onBalanceClick={this.onBalanceClick.bind(this)}></Balance>}
+                                {this.state.sendCurrency && this.state.sendCurrency.SYMBOL!="ETH" && <TokenBalance onBalanceClick={this.onBalanceClick.bind(this)} tokenBalance={tokenBalance} />}
+                        
+                                </span>
                             <div className="exchange-block is-processing styled__ExchangeBlock-th509d-0 fzipjT">
 
                                 <div className="currency-block styled__WrapperCurrency-g3y0ua-0 rGnYa send-box" style={{}}>

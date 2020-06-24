@@ -48,7 +48,23 @@ export default  function TokenBalance(props) {
     }
   }, []) // ensures refresh if referential identity of library doesn't change across chainIds
  
- console.log('lib',library,account)
+//onBalanceClick
+if(props.onBalanceClick)
+return (
+  <a style={{cursor:'pointer'}} title="Enter Max" onClick={()=>props.onBalanceClick(parseFloat(formatEther(props.tokenBalance)).toPrecision(4))}>
+  {!!props.tokenBalance && account
+          ? `Balance: ${parseFloat(formatEther(props.tokenBalance)).toPrecision(4)}`
+          : props.tokenBalance === null
+          ? 'Error'
+          : !account || account === null
+          ? '-'
+          : !!account && !!library
+          ? '-'
+          : ''}   
+</a>
+
+)
+else
   return (
     <React.Fragment>
         {!!props.tokenBalance && account
