@@ -56,5 +56,11 @@
 
 
 .wallets .card:hover{
+    
     border-color: rgb(92, 162, 255);
+}
+
+.disabled,.disabled:hover,.disabled:focus{
+    background-color: gray !important;
+    border-color: gray !important;
 }

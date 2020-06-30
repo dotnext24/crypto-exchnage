@@ -67,6 +67,7 @@ export default class Exchange extends Component {
 
 
    async componentDidMount() {
+       console.log('componentDidMount')
         if (!this.state.sendCurrency.SYMBOL) {
             const defaultCurrencies =await getDefaultTokens(process.env.REACT_APP_DEFAULT_EXCHANGE)
             if (defaultCurrencies.length == 2) {
@@ -182,8 +183,14 @@ export default class Exchange extends Component {
                 const overwrite_Percent=this.state.receiveCurrency.PRICE_OVERWRITE || 0;
                 const overwriteAmount=overwrite_Percent>0?(parseFloat(overwrite_Percent)*receiveValue/100).toFixed(8):0;
                
+                let receiveCurrency=this.state.receiveCurrency;
+                if(receiveCurrency && receiveCurrency.SYMBOL==currency.SYMBOL)
+                receiveCurrency={};
+                
+
                 this.setState({
                     sendCurrency: { ...currency, usdRate: rate },
+                    receiveCurrency:receiveCurrency,
                     totalEstimatedUsd: totalEstimatedUsd,
                     showMinWarning:true,
                     receiveValue:parseFloat(eval(receiveValue-exchangeFee)+eval(overwriteAmount)).toFixed(8),
@@ -215,8 +222,13 @@ export default class Exchange extends Component {
                 const overwrite_Percent=currency.PRICE_OVERWRITE || 0;
                 const overwriteAmount=overwrite_Percent>0?(parseFloat(overwrite_Percent)*receiveValue/100).toFixed(8):0; 
 
+                let sendCurrency=this.state.sendCurrency;
+                if(sendCurrency && sendCurrency.SYMBOL==currency.SYMBOL)
+                sendCurrency={};
+
                 this.setState({
                     receiveCurrency: { ...currency, usdRate: rate },
+                    sendCurrency:sendCurrency,
                     receiveValue:parseFloat(eval(receiveValue-exchangeFee)+eval(overwriteAmount)).toFixed(8),
                     exchangeFee_Percent,
                     exchangeFee,
@@ -313,7 +325,7 @@ export default class Exchange extends Component {
     }
 
     isValid=()=>{
-        return this.state.sendValue>0 && this.state.receiveValue>0 && this.state.totalEstimatedUsd>0
+        return this.state.sendCurrency.SYMBOL && this.state.receiveCurrency.SYMBOL && this.state.sendValue>0 && this.state.receiveValue>0 && this.state.totalEstimatedUsd>0
     }
 
     isMinimunEstimatedAmount=()=>{      
@@ -370,7 +382,8 @@ export default class Exchange extends Component {
 
     render() {
         const tokenBalance=this.state.assets.filter(x=>x.symbol==this.state.showSendCurrency.SYMBOL).length>0?this.state.assets.filter(x=>x.symbol==this.state.showSendCurrency.SYMBOL)[0].balance:"0";
-
+        console.log('valid',this.state.sendValue, this.state.receiveValue, this.state.totalEstimatedUsd)
+        console.log('isvalid',this.isValid())
         return (
             <React.Fragment>
                
@@ -398,7 +411,7 @@ export default class Exchange extends Component {
                                     <input style={this.isValid()?{}:{'border-color': 'rgba(255, 176, 0, 0.294)'}} onChange={this.handleSendValueChange} value={this.state.sendValue} maxLength="16" className="currency-block__value styled__CurrencyValue-g3y0ua-2 dtUlLd" />
                                     <div className="currency-block__currency styled__CurrencyButtonWrapper-g3y0ua-3 jCKRds">
                                         <button onClick={this.handleShowSendCurrency.bind()} className="currency-block__switch switchable styled__CurrencySwitch-g3y0ua-4 ZmPKt" type="button" id="currency_button_from">
-                                            <div className="full-name-label">{this.state.sendCurrency && this.state.sendCurrency.NAME ? this.state.sendCurrency.NAME : "US Dollar"}</div>{this.state.sendCurrency && this.state.sendCurrency.SYMBOL ? this.state.sendCurrency.SYMBOL : "usd"}
+                                            <div className="full-name-label">{this.state.sendCurrency && this.state.sendCurrency.NAME ? this.state.sendCurrency.NAME : ""}</div>{this.state.sendCurrency && this.state.sendCurrency.SYMBOL ? this.state.sendCurrency.SYMBOL : ""}
                                         </button>
                                     </div>
                                     {this.state.showSendCurrency && <CurrencyDropdown assets={this.state.assets} skip={this.state.receiveCurrency} onSelect={this.onSendCurrencySelect} onClose={this.handleShowSendCurrency}></CurrencyDropdown>}
@@ -436,7 +449,7 @@ export default class Exchange extends Component {
                                     <div className="currency-block__currency styled__CurrencyButtonWrapper-g3y0ua-3 jCKRds">
                                         <button onClick={this.handleShowReceiveCurrency} className="currency-block__switch switchable styled__CurrencySwitch-g3y0ua-4 ZmPKt" type="button" id="currency_button_to">
 
-                                            <div className="full-name-label">{this.state.receiveCurrency && this.state.receiveCurrency.NAME ? this.state.receiveCurrency.NAME : "Ethereum"}</div>{this.state.receiveCurrency && this.state.receiveCurrency.SYMBOL ? this.state.receiveCurrency.SYMBOL : "eth"}
+                                            <div className="full-name-label">{this.state.receiveCurrency && this.state.receiveCurrency.NAME ? this.state.receiveCurrency.NAME : ""}</div>{this.state.receiveCurrency && this.state.receiveCurrency.SYMBOL ? this.state.receiveCurrency.SYMBOL : ""}
                                         </button>
                                     </div>
                                     {this.state.showReceiveCurrency && <CurrencyDropdown assets={this.state.assets}  skip={this.state.sendCurrency} onSelect={this.onReceiveCurrencySelect} onClose={this.handleShowReceiveCurrency}></CurrencyDropdown>}

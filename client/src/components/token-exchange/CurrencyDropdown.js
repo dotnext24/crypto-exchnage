@@ -97,7 +97,7 @@ export default class CurrencyDropdown extends Component {
                         const currency=currencies[key];
                         const tokenBalance=assets.filter(x=>x.symbol==currency.SYMBOL).length>0?assets.filter(x=>x.symbol==currency.SYMBOL)[0].balance:"0";
 
-                        if(this.props.skip && this.props.skip.SYMBOL && currency.SYMBOL!=this.props.skip.SYMBOL)                        
+                        // if(this.props.skip && this.props.skip.SYMBOL && currency.SYMBOL!=this.props.skip.SYMBOL)                        
                     return(<li onClick={()=>this.onSelect(key)} className="sc-ifAKCX sc-cSHVUG ZfCCL"><button className="sc-kAzzGY cCVEey" type="button" tabindex="0"><div className="coin-list-item"><div className="coin-info"><i className="coin-icon"><img height="24" width="24" src={`./assets/tokens/${key}.png`}/></i><span className="coin-name" style={{fontWeight:'normal'}}><span className="coin-ticker" style={{fontWeight:'bolder',fontSize:'15px'}}>{currency.SYMBOL}</span>{currency.NAME}</span></div><div className="icons"><span className="fixed-rate-status"><TokenBalance tokenBalance={tokenBalance} /></span></div></div></button></li>)
                     })}
                     

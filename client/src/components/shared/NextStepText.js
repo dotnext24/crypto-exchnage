@@ -133,7 +133,7 @@ export default function NextStepText(props) {
 
   
   if(active && account && account.length>0)
-        return (<button  disabled={props.disabled==true?"disabled":null} onClick={()=>initTransaction()} type="button" className="bg-primary cl-button  sc-ifAKCX dVuRDF">Next Step</button>
+        return (<button  disabled={props.disabled==true?"disabled":null} onClick={()=>initTransaction()} type="button" className={props.disabled==true?"bg-primary cl-button  sc-ifAKCX dVuRDF disabled":"bg-primary cl-button  sc-ifAKCX dVuRDF"}>Next Step</button>
         )
   else return <button onClick={props.OnConnectWallet} type="button" className="bg-primary cl-button  sc-ifAKCX dVuRDF">Connect to a Wellet</button>;
     

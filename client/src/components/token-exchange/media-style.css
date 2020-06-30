@@ -19,7 +19,7 @@
         width: 16px;
         height: 16px;
         transform: translate(0px, -50%);
-        background: url(https://changelly.com/_next/static/images/arrow-down-309c4ee22cd5479e63282f90548061a7.svg) no-repeat;
+        background:url('/assets/arrow-down.svg') no-repeat;
     }
     .bZzVdI .cl-droplist li .coin-name{
         font-size: 15px;
@@ -388,7 +388,7 @@ button {
     width: 16px;
     height: 16px;
     transform: translate(0px, -50%);
-    background: url(https://changelly.com/_next/static/images/arrow-down-309c4ee22cd5479e63282f90548061a7.svg) no-repeat;
+    background:url('/assets/arrow-down.svg') no-repeat;
 }
 
 /* .gywoMT {
