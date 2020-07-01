@@ -67,7 +67,7 @@ export default class Exchange extends Component {
 
 
    async componentDidMount() {
-       console.log('componentDidMount')
+       
         if (!this.state.sendCurrency.SYMBOL) {
             const defaultCurrencies =await getDefaultTokens(process.env.REACT_APP_DEFAULT_EXCHANGE)
             if (defaultCurrencies.length == 2) {
@@ -124,7 +124,7 @@ export default class Exchange extends Component {
         const response = api.get(
             `/account-assets?address=${this.props.account}&chainId=${this.props.chainId}`
           ).then(response=>{
-           console.log('result',response)
+          
            const result=response.data.result;
            this.setState({
                assets:result
@@ -382,8 +382,7 @@ export default class Exchange extends Component {
 
     render() {
         const tokenBalance=this.state.assets.filter(x=>x.symbol==this.state.showSendCurrency.SYMBOL).length>0?this.state.assets.filter(x=>x.symbol==this.state.showSendCurrency.SYMBOL)[0].balance:"0";
-        console.log('valid',this.state.sendValue, this.state.receiveValue, this.state.totalEstimatedUsd)
-        console.log('isvalid',this.isValid())
+       
         return (
             <React.Fragment>
                
